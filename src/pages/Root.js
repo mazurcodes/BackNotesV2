@@ -1,16 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
 
-const Root = props => {
-  return (
-    <div>
-      Hello
-    </div>
-  )
-}
+const Root = () => {
+  return <div>Hello</div>;
+};
 
-Root.propTypes = {
-
-}
-
-export default Root
+export default Root;
