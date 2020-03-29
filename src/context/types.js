@@ -28,3 +28,6 @@ export const NOTES_ERROR = 'NOTES_ERROR';
 
 // Clear errors for Notes and Auth Contexts
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+
+// Loading state for every context
+export const LOADING = 'LOADING';

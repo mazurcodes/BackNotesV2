@@ -5,9 +5,16 @@ import { ThemeProvider } from 'styled-components';
 import { lightTheme } from '../theme/mainTheme';
 import GlobalStyle from '../theme/GlobalStyle';
 import GlobalContext from '../context/global/globalContext';
+import AuthContext from '../context/auth/authContext';
 
 const MainTemplate = ({ location, children }) => {
   const { setPage } = useContext(GlobalContext);
+  const { loadUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    loadUser(localStorage.token);
+    // eslint-disable-next-line
+  }, [localStorage.token]);
 
   useEffect(() => {
     setPage(location.pathname);

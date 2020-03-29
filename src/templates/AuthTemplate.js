@@ -6,6 +6,7 @@ import Paragraph from '../components/atoms/Paragraph/Paragraph';
 import AuthForm from '../components/organisms/AuthForm/AuthForm';
 import routes from '../routes/routes';
 import GlobalContext from '../context/global/globalContext';
+import AuthContext from '../context/auth/authContext';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -33,7 +34,9 @@ const AuthTemplate = () => {
   const onRedirect = () => setRedirect(true);
 
   const { currentPage } = useContext(GlobalContext);
+  const { isAuthenticated } = useContext(AuthContext);
 
+  if (isAuthenticated) return <Redirect to={routes.notes} />;
   if (redirect)
     return <Redirect push to={currentPage === routes.register ? routes.login : routes.register} />;
   return (

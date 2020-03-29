@@ -7,6 +7,8 @@ import routes from '../routes/routes';
 import Login from './Login';
 import Register from './Register';
 import AuthState from '../context/auth/AuthState';
+import PrivateRoute from '../components/utils/PrivateRoute';
+import Notes from './Notes';
 
 const Root = () => {
   return (
@@ -15,7 +17,8 @@ const Root = () => {
         <BrowserRouter>
           <MainTemplate>
             <Switch>
-              <Route exact path={routes.home} render={() => <Redirect to={routes.login} />} />
+              <Route exact path={routes.home} render={() => <Redirect to={routes.notes} />} />
+              <PrivateRoute exact path={routes.notes} render={() => <Notes />} />
               <Route exact path={routes.login} component={Login} />
               <Route exact path={routes.register} component={Register} />
             </Switch>

@@ -64,7 +64,6 @@ const AuthForm = ({ onRedirect }) => {
 
   const { register, login } = useContext(AuthContext);
 
-  // TODO: Auth state with register and login methods
   const onSubmit = (values) => {
     currentPage === '/login' ? login(values) : register(values);
   };
