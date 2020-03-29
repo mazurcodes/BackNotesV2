@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Form, Field } from 'react-final-form';
 import Heading from '../../atoms/Heading/Heading';
 import Input from '../../atoms/Input/Input';
 import Button from '../../atoms/Button/Button';
 import GlobalContext from '../../../context/global/globalContext';
+import AuthContext from '../../../context/auth/authContext';
 import routes from '../../../routes/routes';
 
 const StyledWrapper = styled.div`
@@ -31,6 +32,18 @@ const StyledForm = styled.form`
 
 const StyledInput = styled(Input)`
   margin-bottom: 20px;
+
+  ${({ error }) =>
+    error &&
+    css`
+      background-color: ${({ theme }) => theme.errorInput};
+    `}
+`;
+
+const StyledError = styled.div`
+  margin-bottom: 20px;
+  color: red;
+  font-weight: ${({ theme }) => theme.bold};
 `;
 
 const StyledButton = styled(Button)`
@@ -49,55 +62,118 @@ const AuthForm = ({ onRedirect }) => {
   const { currentPage } = useContext(GlobalContext);
   const formType = currentPage === '/login' ? 'Login' : 'Register';
 
-  const onSubmit = (values) => console.log(values);
+  const { register } = useContext(AuthContext);
+
+  // TODO: Auth state with register and login methods
+  const onSubmit = (values) => register(values);
 
   return (
     <StyledWrapper>
       <StyledFormHeading>{formType}</StyledFormHeading>
       <Form
         onSubmit={onSubmit}
-        // validate={validate}
-        render={({ handleSubmit }) => (
+        validate={(values) => {
+          const errors = {};
+          // email
+          if (!values.name) {
+            errors.name = 'Name is required';
+          }
+          if (!values.email) {
+            errors.email = 'Email is required';
+          }
+          const isEmailValid = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email);
+          if (!isEmailValid) {
+            errors.email = 'Provide valid email address';
+          }
+
+          // password
+          if (!values.password) {
+            errors.password = 'Password is required';
+          }
+          const isPasswordValid = /^(?=.{6,})/.test(values.password);
+          if (!isPasswordValid) {
+            errors.password = 'Password must be at least 6 chracters';
+          }
+
+          // password2
+          if (values.password !== values.password2) {
+            errors.password2 = `Passwords don't match`;
+          }
+          return errors;
+        }}
+        render={({ handleSubmit, submitting }) => (
           <StyledForm onSubmit={handleSubmit}>
             <Field
+              name="name"
+              render={({ input, meta }) =>
+                currentPage === '/register' && (
+                  <>
+                    <StyledInput
+                      type="text"
+                      name={input.name}
+                      value={input.value}
+                      onChange={input.onChange}
+                      placeholder="Name"
+                      error={meta.error && meta.touched}
+                    />
+                    {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
+                  </>
+                )
+              }
+            />
+            <Field
               name="email"
-              render={({ input }) => (
-                <StyledInput
-                  type="email"
-                  name={input.name}
-                  value={input.value}
-                  onChange={input.onChange}
-                  placeholder="Email"
-                />
+              render={({ input, meta }) => (
+                <>
+                  <StyledInput
+                    type="email"
+                    name={input.name}
+                    value={input.value}
+                    onChange={input.onChange}
+                    placeholder="Email"
+                    error={meta.error && meta.touched}
+                  />
+                  {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
+                </>
               )}
             />
             <Field
               name="password"
-              render={({ input }) => (
-                <StyledInput
-                  type="password"
-                  name={input.name}
-                  value={input.value}
-                  onChange={input.onChange}
-                  placeholder="Password"
-                />
-              )}
-            />
-            <Field
-              name="password2"
-              render={({ input }) =>
-                currentPage === '/register' && (
+              render={({ input, meta }) => (
+                <>
                   <StyledInput
                     type="password"
                     name={input.name}
                     value={input.value}
                     onChange={input.onChange}
-                    placeholder="Confirm password"
+                    placeholder="Password"
+                    error={meta.error && meta.touched}
                   />
+                  {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
+                </>
+              )}
+            />
+            <Field
+              name="password2"
+              render={({ input, meta }) =>
+                currentPage === '/register' && (
+                  <>
+                    <StyledInput
+                      type="password"
+                      name={input.name}
+                      value={input.value}
+                      onChange={input.onChange}
+                      placeholder="Confirm password"
+                      error={meta.error && meta.touched}
+                    />
+                    {meta.error && <StyledError>{meta.error}</StyledError>}
+                  </>
                 )
               }
             />
-            <StyledButton type="submit">{formType}</StyledButton>
+            <StyledButton type="submit" disabled={submitting}>
+              {formType}
+            </StyledButton>
           </StyledForm>
         )}
       />
@@ -113,16 +189,3 @@ AuthForm.propTypes = {
 };
 
 export default AuthForm;
-
-/* <StyledWrapper>
-      <StyledFormHeading>{formType}</StyledFormHeading>
-      <StyledForm>
-        <StyledInput type="email" placeholder="Email" />
-        <StyledInput type="password" placeholder="Password" />
-        {currentPage === routes.register}
-        <StyledButton>{formType}</StyledButton>
-        <StyledRedirectLink onClick={onRedirect}>
-          I want to {currentPage === routes.login ? 'register' : 'login'}
-        </StyledRedirectLink>
-      </StyledForm>
-    </StyledWrapper> */

@@ -1,10 +1,14 @@
 {
   "extends": ["airbnb", "prettier", "prettier/react"],
-  "globals": {
-    "document": true
+  "env": {
+    "browser": true
   },
   "rules": {
     "import/prefer-default-export": 0,
-    "react/jsx-filename-extension": [1, { "extensions": [".js"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+    "no-unused-expressions": [1, {
+      "allowShortCircuit": true,
+      "allowTernary": true
+    }]
   }
 }

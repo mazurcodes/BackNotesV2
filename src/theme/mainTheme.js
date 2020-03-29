@@ -2,6 +2,7 @@ export const lightTheme = {
   notes: 'hsl(49, 100%, 58%)',
   black: 'hsl(0, 0%, 0%)',
   gray: 'hsl(0, 0%, 95%)',
+  errorInput: 'hsl(0, 100%, 90%)',
   regular: '400',
   bold: '700',
   fontSize: {
