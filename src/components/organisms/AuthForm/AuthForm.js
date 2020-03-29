@@ -62,10 +62,12 @@ const AuthForm = ({ onRedirect }) => {
   const { currentPage } = useContext(GlobalContext);
   const formType = currentPage === '/login' ? 'Login' : 'Register';
 
-  const { register } = useContext(AuthContext);
+  const { register, login } = useContext(AuthContext);
 
   // TODO: Auth state with register and login methods
-  const onSubmit = (values) => register(values);
+  const onSubmit = (values) => {
+    currentPage === '/login' ? login(values) : register(values);
+  };
 
   return (
     <StyledWrapper>
@@ -75,7 +77,7 @@ const AuthForm = ({ onRedirect }) => {
         validate={(values) => {
           const errors = {};
           // email
-          if (!values.name) {
+          if (currentPage === '/register' && !values.name) {
             errors.name = 'Name is required';
           }
           if (!values.email) {
@@ -96,7 +98,7 @@ const AuthForm = ({ onRedirect }) => {
           }
 
           // password2
-          if (values.password !== values.password2) {
+          if (currentPage === '/register' && values.password !== values.password2) {
             errors.password2 = `Passwords don't match`;
           }
           return errors;

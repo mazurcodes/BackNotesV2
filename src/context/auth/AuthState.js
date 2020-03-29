@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ContextDevTool from 'react-context-devtool';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
-import { REGISTER_SUCCESS, REGISTER_FAIL } from '../types';
+import { REGISTER_SUCCESS, REGISTER_FAIL, LOGIN_SUCCESS, LOGIN_FAIL } from '../types';
 
 const AuthState = ({ children }) => {
   const initialState = {
@@ -23,32 +23,42 @@ const AuthState = ({ children }) => {
   //   }
   // }
 
-  // const authUrl = 'http://localhost:5000/auth';
-  const userUrl = 'http://localhost:5000/users';
+  const signFetchConfig = (user) => {
+    return {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    };
+  };
+
+  // const authFetchConfig = (token) => {
+  //   return {
+  //     method: 'GET',
+  //     headers: {
+  //       'x-auth-token': token
+  //     },
+  //   };
+  // };
+
+  const AUTH_URL = 'http://localhost:5000/auth';
+  const REG_URL = 'http://localhost:5000/users';
 
   const register = async (user) => {
-    console.log(JSON.stringify(user));
     try {
-      const res = await fetch(userUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(user),
-      });
+      const res = await fetch(REG_URL, signFetchConfig(user));
       const data = await res.json();
-      console.log(data);
 
-      // if response is not ok throw exeption catched later
+      // if response is not ok throw exeption
       if (!res.ok) throw data.error;
 
-      // if res is ok then proceed
+      // if res is ok then proceed with dispatch
       dispatch({
         type: REGISTER_SUCCESS,
         payload: data.token,
       });
     } catch (err) {
-      console.log(err);
       dispatch({
         type: REGISTER_FAIL,
         payload: err,
@@ -58,9 +68,29 @@ const AuthState = ({ children }) => {
 
   // TODO: Login action
 
-  // const login = async user => {
+  const login = async (user) => {
+    console.log(user);
+    try {
+      const res = await fetch(AUTH_URL, signFetchConfig(user));
+      const data = await res.json();
+      console.log(data);
 
-  // }
+      // if response is not ok throw exeption catched later
+      if (!res.ok) throw data.error;
+
+      // if res is ok then proceed
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: data.token,
+      });
+    } catch (err) {
+      console.log(err);
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err,
+      });
+    }
+  };
 
   // TODO: Load user if token exist
 
@@ -77,6 +107,7 @@ const AuthState = ({ children }) => {
         loading: state.loading,
         token: state.token,
         register,
+        login,
       }}
     >
       <ContextDevTool context={AuthContext} id="authContext" displayName="Auth Context" />
