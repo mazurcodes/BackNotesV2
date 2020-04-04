@@ -6,9 +6,27 @@
   "rules": {
     "import/prefer-default-export": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
-    "no-unused-expressions": [1, {
-      "allowShortCircuit": true,
-      "allowTernary": true
-    }]
+    "no-unused-expressions": [
+      1,
+      {
+        "allowShortCircuit": true,
+        "allowTernary": true
+      }
+    ],
+    "react/jsx-props-no-spreading": [
+      1,
+      {
+        "exceptions": ["StyledInput"]
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      1,
+      {
+        "labelComponents": ["StyledLabel"],
+        "labelAttributes": ["label"],
+        "controlComponents": ["StyledInput", "StyledInputDesc"],
+        "depth": 3
+      }
+    ]
   }
 }

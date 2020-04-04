@@ -46,7 +46,6 @@ const AuthState = ({ children }) => {
   const AUTH_URL = 'http://localhost:5000/auth';
   const REG_URL = 'http://localhost:5000/users';
 
-  // TODO: Set loading
   const setLoading = () => dispatch({ type: LOADING });
 
   const register = async (user) => {

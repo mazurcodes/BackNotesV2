@@ -11,15 +11,18 @@ const MainTemplate = ({ location, children }) => {
   const { setPage } = useContext(GlobalContext);
   const { loadUser } = useContext(AuthContext);
 
+  // If token is already in localStorage load user from server
   useEffect(() => {
     loadUser(localStorage.token);
     // eslint-disable-next-line
   }, [localStorage.token]);
 
+  // Every change in current path must be reported to global state
   useEffect(() => {
     setPage(location.pathname);
     // eslint-disable-next-line
   }, [location]);
+
   return (
     <>
       <GlobalStyle />
