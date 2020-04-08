@@ -23,7 +23,7 @@ const UserTemplate = ({ children }) => {
 };
 
 UserTemplate.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default UserTemplate;

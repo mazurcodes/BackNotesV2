@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ContextDevTool from 'react-context-devtool';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
+import { AUTH_API, REG_API } from '../api';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -43,15 +44,12 @@ const AuthState = ({ children }) => {
     };
   };
 
-  const AUTH_URL = 'http://localhost:5000/auth';
-  const REG_URL = 'http://localhost:5000/users';
-
   const setLoading = () => dispatch({ type: LOADING });
 
   const register = async (user) => {
     setLoading();
     try {
-      const res = await fetch(REG_URL, signFetchConfig(user));
+      const res = await fetch(REG_API, signFetchConfig(user));
       const data = await res.json();
 
       // if response is not ok throw exeption
@@ -73,7 +71,7 @@ const AuthState = ({ children }) => {
   const login = async (user) => {
     setLoading();
     try {
-      const res = await fetch(AUTH_URL, signFetchConfig(user));
+      const res = await fetch(AUTH_API, signFetchConfig(user));
       const data = await res.json();
 
       // if response is not ok throw exeption catched later
@@ -96,7 +94,7 @@ const AuthState = ({ children }) => {
     if (!token) return;
     setLoading();
     try {
-      const res = await fetch(AUTH_URL, authFetchConfig(token));
+      const res = await fetch(AUTH_API, authFetchConfig(token));
       const data = await res.json();
 
       // if response is not ok throw exeption catched later

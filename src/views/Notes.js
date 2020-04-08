@@ -1,14 +1,18 @@
-import React from 'react';
-import UserTemplate from '../templates/UserTemplate';
+import React, { useContext, useEffect } from 'react';
+import FilesTemplate from '../templates/FilesTemplate';
+import notesContext from '../context/notes/notesContext';
 
 const Notes = () => {
-  return (
-    <UserTemplate>
-      <p>here comes the note</p>
-      <p>here comes the note</p>
-      <p>here comes the note</p>
-    </UserTemplate>
-  );
+  const { notes, getNotes } = useContext(notesContext);
+
+  useEffect(() => {
+    !notes[0] && getNotes();
+    // eslint-disable-next-line
+  }, []);
+
+  const notesList = notes.map((note) => <p>{note.title}</p>);
+
+  return <FilesTemplate>{notesList[0] ? notesList : <p>Nothing to show...</p>}</FilesTemplate>;
 };
 
 export default Notes;
