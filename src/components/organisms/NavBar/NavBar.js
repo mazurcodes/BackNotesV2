@@ -33,6 +33,7 @@ const StyledParagraph = styled(Paragraph)`
 
 const NavBar = () => {
   const { user, logout } = useContext(AuthContext);
+  // TODO: onLogout method with clear notes and logout auth
   return (
     <StyledWrapper>
       <StyledLogo src={logo} />
