@@ -34,10 +34,9 @@ const StyledParagraph = styled(Paragraph)`
 
 const NavBar = () => {
   const { user, logout } = useContext(AuthContext);
-  const { clearState } = useContext(NotesContext);
-  // TODO: onLogout method with clear notes and logout auth
+  const { clearNotesState } = useContext(NotesContext);
   const onLogout = () => {
-    clearState();
+    clearNotesState();
     logout();
   };
   return (

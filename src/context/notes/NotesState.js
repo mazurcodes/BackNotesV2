@@ -12,18 +12,12 @@ import {
   clearCurrentAction,
   filterNotesAction,
   clearFilterAction,
-  clearStateAction,
+  clearNotesStateAction,
 } from './notesActions';
 
 const NotesState = ({ children }) => {
   const initialState = {
-    notes: [
-      { id: 1, title: 'Hello', desc: 'first file hehe :)' },
-      { id: 2, title: 'Second hello', desc: 'first file hehe :)' },
-      { id: 3, title: 'This is great', desc: 'first file hehe :)' },
-      { id: 4, title: 'Awesome', desc: 'first file hehe :)' },
-      { id: 5, title: 'yes. i am', desc: 'first file hehe :)' },
-    ],
+    notes: [],
     filtered: [],
     current: null,
     error: '',
@@ -123,10 +117,10 @@ const NotesState = ({ children }) => {
    *
    * Example:
    *
-   *      clearNotes()
+   *      clearNotesState()
    *
    */
-  const clearState = () => clearStateAction(dispatch);
+  const clearNotesState = () => clearNotesStateAction(dispatch);
 
   return (
     <NotesContext.Provider
@@ -143,7 +137,7 @@ const NotesState = ({ children }) => {
         clearCurrent,
         filterNotes,
         clearFilter,
-        clearState,
+        clearNotesState,
       }}
     >
       <ContextDevTool context={NotesContext} id="notesContext" displayName="Notes Context" />

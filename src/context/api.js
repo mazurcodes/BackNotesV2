@@ -13,6 +13,7 @@ export const REG_API = 'http://localhost:5000/users';
  * Accepts optional string argument 'id'
  *
  * Examples:
+ *
  *     notesApi();
  *     notesApi(id);
  *     notesApi('12345ffd44');

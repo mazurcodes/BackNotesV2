@@ -108,4 +108,4 @@ export const filterNotesAction = (word, dispatch) =>
 
 export const clearFilterAction = (dispatch) => dispatch({ type: CLEAR_FILTER });
 
-export const clearStateAction = (dispatch) => dispatch({ type: CLEAR_STATE });
+export const clearNotesStateAction = (dispatch) => dispatch({ type: CLEAR_STATE });

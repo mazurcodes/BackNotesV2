@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import UserTemplate from './UserTemplate';
 
 const StyledWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 250px 50px 100px;
 `;
 
 const FilesTemplate = ({ children }) => {
