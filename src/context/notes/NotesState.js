@@ -3,9 +3,17 @@ import PropTypes from 'prop-types';
 import ContextDevTool from 'react-context-devtool';
 import NotesContext from './notesContext';
 import notesReducer from './notesReducer';
-import { NOTES_API } from '../api';
-import { GET_NOTES, NOTES_ERROR, ADD_NOTE, DELETE_NOTE, UPDATE_NOTE, SET_CURRENT } from '../types';
-import { setSmthgAction } from './notesActions';
+import {
+  getNotesAction,
+  addNoteAction,
+  deleteNoteAction,
+  updateNoteAction,
+  setCurrentAction,
+  clearCurrentAction,
+  filterNotesAction,
+  clearFilterAction,
+  clearStateAction,
+} from './notesActions';
 
 const NotesState = ({ children }) => {
   const initialState = {
@@ -23,41 +31,6 @@ const NotesState = ({ children }) => {
   const [state, dispatch] = useReducer(notesReducer, initialState);
 
   /**
-   * Configures Notes API path.
-   *
-   * Accepts optional string argument 'id'
-   *
-   * Examples:
-   *     notesApi();
-   *     notesApi(id);
-   *     notesApi('12345ffd44');
-   */
-  const notesApi = (id = '') => {
-    return `${NOTES_API}/${id}`;
-  };
-
-  /**
-   * Returns configuration object for fetch() method.
-   *
-   * Accepts params 'method' and {body}:
-   *
-   *      fetchConfig('POST')
-   *      fetchConfig('DELETE')
-   *      fetchConfig('PUT', {title: 'hello', desc: 'this is hello'})
-   *
-   */
-  const fetchConfig = (method = 'GET', body) => {
-    return {
-      method,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-auth-token': localStorage.getItem('token'),
-      },
-      body: body && JSON.stringify(body),
-    };
-  };
-
-  /**
    * Context action for fetching all user notes.
    *
    * Example:
@@ -66,23 +39,7 @@ const NotesState = ({ children }) => {
    *
    * Accepts no arguments
    */
-  const getNotes = async () => {
-    try {
-      const response = await fetch(notesApi(), fetchConfig());
-      const notesList = await response.json();
-      if (!response.ok) throw notesList.error;
-      dispatch({
-        type: GET_NOTES,
-        payload: notesList,
-      });
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: NOTES_ERROR,
-        payload: err,
-      });
-    }
-  };
+  const getNotes = () => getNotesAction(dispatch);
 
   /**
    * Context action for sending new note to DB.
@@ -93,23 +50,7 @@ const NotesState = ({ children }) => {
    *      addNote({title: 'hello', desc: 'yo', content: 'hey'})
    *
    */
-  const addNote = async (note) => {
-    try {
-      const response = await fetch(notesApi(), fetchConfig('POST', note));
-      const noteData = await response.json();
-      if (!response.ok) throw noteData.error;
-      dispatch({
-        type: ADD_NOTE,
-        payload: noteData,
-      });
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: NOTES_ERROR,
-        payload: err,
-      });
-    }
-  };
+  const addNote = (note) => addNoteAction(note, dispatch);
 
   /**
    * Context action for deleting note in DB.
@@ -120,23 +61,7 @@ const NotesState = ({ children }) => {
    *      deleteNote('a12344232dfdf534')
    *
    */
-  const deleteNote = async (id) => {
-    try {
-      const response = await fetch(notesApi(id), fetchConfig('DELETE'));
-      const noteData = await response.json();
-      if (!response.ok) throw noteData.error;
-      dispatch({
-        type: DELETE_NOTE,
-        payload: id,
-      });
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: NOTES_ERROR,
-        payload: err,
-      });
-    }
-  };
+  const deleteNote = (id) => deleteNoteAction(id, dispatch);
 
   /**
    * Context action for updating note in DB.
@@ -147,22 +72,7 @@ const NotesState = ({ children }) => {
    *      updateNote({title: 'hello', desc: 'yo', content: 'hey'})
    *
    */
-  const updateNote = async (note) => {
-    try {
-      const response = await fetch(notesApi(note.id), fetchConfig('PUT', note));
-      const noteData = await response.json();
-      if (!response.ok) throw noteData.error;
-      dispatch({
-        type: UPDATE_NOTE,
-      });
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: NOTES_ERROR,
-        payload: err,
-      });
-    }
-  };
+  const updateNote = (note) => updateNoteAction(note, dispatch);
 
   /**
    * Context action for downloading single note from DB.
@@ -175,25 +85,7 @@ const NotesState = ({ children }) => {
    *      setCurrent('sd2345frt')
    *
    */
-  const setCurrent = async (id) => {
-    try {
-      const response = await fetch(notesApi(id), fetchConfig());
-      const note = await response.json();
-      if (!response.ok) throw note.error;
-      dispatch({
-        type: SET_CURRENT,
-        payload: note,
-      });
-    } catch (err) {
-      console.log(err);
-      dispatch({
-        type: NOTES_ERROR,
-        payload: err,
-      });
-    }
-  };
-
-  // TODO: actions for notes state
+  const setCurrent = (id) => setCurrentAction(id, dispatch);
 
   /**
    * Context action for clearing current note in state.
@@ -203,7 +95,7 @@ const NotesState = ({ children }) => {
    *      clearCurrent()
    *
    */
-  const clearCurrent = () => dispatch();
+  const clearCurrent = () => clearCurrentAction(dispatch);
 
   /**
    * Context action for filtering notes in state.
@@ -214,7 +106,7 @@ const NotesState = ({ children }) => {
    *      filterNotes('hello')
    *
    */
-  const filterNotes = () => {};
+  const filterNotes = (word) => filterNotesAction(word, dispatch);
 
   /**
    * Context action for filtering notes in state.
@@ -224,7 +116,7 @@ const NotesState = ({ children }) => {
    *      clearFilter()
    *
    */
-  const clearFilter = () => {};
+  const clearFilter = () => clearFilterAction(dispatch);
 
   /**
    * Context action for return to initial state.
@@ -234,7 +126,7 @@ const NotesState = ({ children }) => {
    *      clearNotes()
    *
    */
-  const clearNotes = () => {};
+  const clearState = () => clearStateAction(dispatch);
 
   return (
     <NotesContext.Provider
@@ -251,8 +143,7 @@ const NotesState = ({ children }) => {
         clearCurrent,
         filterNotes,
         clearFilter,
-        clearNotes,
-        setSmthg: (id) => setSmthgAction(id, dispatch),
+        clearState,
       }}
     >
       <ContextDevTool context={NotesContext} id="notesContext" displayName="Notes Context" />

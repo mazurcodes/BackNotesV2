@@ -4,6 +4,7 @@ import logo from '../../../assets/logos/backnotesv2.svg';
 import logoutIcon from '../../../assets/icons/logout.svg';
 import ButtonIcon from '../../atoms/ButtonIcon/ButtonIcon';
 import Paragraph from '../../atoms/Paragraph/Paragraph';
+import NotesContext from '../../../context/notes/notesContext';
 import AuthContext from '../../../context/auth/authContext';
 
 const StyledWrapper = styled.div`
@@ -33,13 +34,18 @@ const StyledParagraph = styled(Paragraph)`
 
 const NavBar = () => {
   const { user, logout } = useContext(AuthContext);
+  const { clearState } = useContext(NotesContext);
   // TODO: onLogout method with clear notes and logout auth
+  const onLogout = () => {
+    clearState();
+    logout();
+  };
   return (
     <StyledWrapper>
       <StyledLogo src={logo} />
       <StyledUserWrapper>
         <StyledParagraph>Welcome, {user && user.name}</StyledParagraph>
-        <ButtonIcon icon={logoutIcon} onClick={logout} />
+        <ButtonIcon icon={logoutIcon} onClick={onLogout} />
       </StyledUserWrapper>
     </StyledWrapper>
   );

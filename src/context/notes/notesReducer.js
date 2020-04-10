@@ -7,7 +7,7 @@ import {
   CLEAR_CURRENT,
   FILTER_NOTES,
   CLEAR_FILTER,
-  CLEAR_NOTES,
+  CLEAR_STATE,
   NOTES_ERROR,
 } from '../types';
 
@@ -50,8 +50,8 @@ export default (state, action) => {
         ...state,
         filtered: state.notes.filter(
           (note) =>
-            note.title.toLowerCase().includes(action.payload.title.toLowerCase()) ||
-            note.description.toLowerCase().includes(action.payload.description.toLowerCase()),
+            note.title.toLowerCase().includes(action.payload.toLowerCase()) ||
+            note.description.toLowerCase().includes(action.payload.toLowerCase()),
         ),
       };
     case CLEAR_FILTER:
@@ -59,7 +59,7 @@ export default (state, action) => {
         ...state,
         filtered: [],
       };
-    case CLEAR_NOTES:
+    case CLEAR_STATE:
       return {
         ...state,
         notes: [],

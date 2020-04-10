@@ -4,12 +4,12 @@ import notesContext from '../context/notes/notesContext';
 import AuthContext from '../context/auth/authContext';
 
 const Notes = () => {
-  const { notes, getNotes, setSmthg } = useContext(notesContext);
+  const { notes, getNotes } = useContext(notesContext);
   const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
+    console.log('hello');
     isAuthenticated && !notes[0] && getNotes();
-    setSmthg(1234);
     // eslint-disable-next-line
   }, []);
 

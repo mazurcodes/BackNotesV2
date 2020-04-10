@@ -23,7 +23,7 @@ export const SET_CURRENT = 'SET_CURRENT';
 export const CLEAR_CURRENT = 'CLEAR_CURRENT';
 export const FILTER_NOTES = 'FILTER_NOTES';
 export const CLEAR_FILTER = 'CLEAR_FILTER';
-export const CLEAR_NOTES = 'CLEAR_NOTES';
+export const CLEAR_STATE = 'CLEAR_STATE';
 export const NOTES_ERROR = 'NOTES_ERROR';
 
 // Clear errors for Notes and Auth Contexts
