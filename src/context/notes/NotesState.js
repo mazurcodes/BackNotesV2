@@ -13,6 +13,7 @@ import {
   filterNotesAction,
   clearFilterAction,
   clearNotesStateAction,
+  updateCurrentAction,
 } from './notesActions';
 
 const NotesState = ({ children }) => {
@@ -20,6 +21,7 @@ const NotesState = ({ children }) => {
     notes: [],
     filtered: [],
     current: null,
+    renderedContent: null,
     error: '',
   };
   const [state, dispatch] = useReducer(notesReducer, initialState);
@@ -63,7 +65,12 @@ const NotesState = ({ children }) => {
    * Example:
    *
    *      updateNote(note)
-   *      updateNote({title: 'hello', desc: 'yo', content: 'hey'})
+   *      updateNote({
+   *        id: '5dfgdf4354353dgfsdfs',
+   *        title: 'hello',
+   *        desc: 'yo',
+   *        content: 'hey'
+   *      })
    *
    */
   const updateNote = (note) => updateNoteAction(note, dispatch);
@@ -80,6 +87,22 @@ const NotesState = ({ children }) => {
    *
    */
   const setCurrent = (id) => setCurrentAction(id, dispatch);
+
+  /**
+   * Context action for updatinf current note in state.
+   *
+   * Example:
+   *
+   *      updateCurrent(note);
+   *      updateCurrent({
+   *        id: '5dfgdf4354353dgfsdfs',
+   *        title: 'hello',
+   *        desc: 'yo',
+   *        content: 'hey'
+   *      })
+   *
+   */
+  const updateCurrent = (note) => updateCurrentAction(note, dispatch);
 
   /**
    * Context action for clearing current note in state.
@@ -128,12 +151,14 @@ const NotesState = ({ children }) => {
         notes: state.notes,
         filtered: state.filtered,
         current: state.current,
+        renderedContent: state.renderedContent,
         error: state.error,
         getNotes,
         addNote,
         deleteNote,
         updateNote,
         setCurrent,
+        updateCurrent,
         clearCurrent,
         filterNotes,
         clearFilter,

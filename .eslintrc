@@ -24,7 +24,7 @@
       {
         "labelComponents": ["StyledLabel"],
         "labelAttributes": ["label"],
-        "controlComponents": ["StyledInput", "StyledInputDesc"],
+        "controlComponents": ["StyledInput", "StyledInputDesc", "StyledTextArea"],
         "depth": 3
       }
     ]

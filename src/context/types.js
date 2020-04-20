@@ -25,6 +25,7 @@ export const FILTER_NOTES = 'FILTER_NOTES';
 export const CLEAR_FILTER = 'CLEAR_FILTER';
 export const CLEAR_STATE = 'CLEAR_STATE';
 export const NOTES_ERROR = 'NOTES_ERROR';
+export const RENDER_CONTENT = 'RENDER_CONTENT';
 
 // Clear errors for Notes and Auth Contexts
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';

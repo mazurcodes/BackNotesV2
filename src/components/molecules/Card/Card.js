@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Heading from '../../atoms/Heading/Heading';
@@ -8,6 +8,7 @@ import ButtonIcon from '../../atoms/ButtonIcon/ButtonIcon';
 import openIcon from '../../../assets/icons/icon-open.svg';
 import editIcon from '../../../assets/icons/icon-edit.svg';
 import deleteIcon from '../../../assets/icons/icon-delete.svg';
+import notesContext from '../../../context/notes/notesContext';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -83,7 +84,20 @@ const StyledDivider = styled.div`
   margin: 0 10px;
 `;
 
-const Card = ({ note: { title, desc } }) => {
+const Card = ({ note: { id, title, desc } }) => {
+  const { deleteNote, setCurrent } = useContext(notesContext);
+
+  const onOpen = () => {
+    setCurrent(id);
+  };
+
+  const onEdit = () => {
+    setCurrent(id);
+  };
+
+  const onDelete = () => {
+    deleteNote(id);
+  };
   return (
     <StyledWrapper>
       <StyledTechWrapper>
@@ -97,10 +111,10 @@ const Card = ({ note: { title, desc } }) => {
         <StyledDescription>{desc}</StyledDescription>
       </StyledDescriptionWrapper>
       <StyledActionsWrapper>
-        <StyledButtonIcon icon={openIcon} />
-        <StyledButtonIcon icon={editIcon} />
+        <StyledButtonIcon icon={openIcon} onClick={onOpen} />
+        <StyledButtonIcon icon={editIcon} onClick={onEdit} />
         <StyledDivider />
-        <StyledButtonIcon icon={deleteIcon} />
+        <StyledButtonIcon icon={deleteIcon} onClick={onDelete} />
       </StyledActionsWrapper>
     </StyledWrapper>
   );

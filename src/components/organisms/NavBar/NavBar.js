@@ -32,6 +32,12 @@ const StyledParagraph = styled(Paragraph)`
   margin-right: 20px;
 `;
 
+const StyledButtonIcon = styled(ButtonIcon)`
+  :hover {
+    border: 2px solid white;
+  }
+`;
+
 const NavBar = () => {
   const { user, logout } = useContext(AuthContext);
   const { clearNotesState } = useContext(NotesContext);
@@ -44,7 +50,7 @@ const NavBar = () => {
       <StyledLogo src={logo} />
       <StyledUserWrapper>
         <StyledParagraph>Welcome, {user && user.name}</StyledParagraph>
-        <ButtonIcon icon={logoutIcon} onClick={onLogout} />
+        <StyledButtonIcon icon={logoutIcon} onClick={onLogout} />
       </StyledUserWrapper>
     </StyledWrapper>
   );

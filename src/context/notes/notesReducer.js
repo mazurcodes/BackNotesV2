@@ -9,6 +9,7 @@ import {
   CLEAR_FILTER,
   CLEAR_STATE,
   NOTES_ERROR,
+  RENDER_CONTENT,
 } from '../types';
 
 export default (state, action) => {
@@ -21,7 +22,7 @@ export default (state, action) => {
     case ADD_NOTE:
       return {
         ...state,
-        notes: [...state.notes, action.payload],
+        notes: [action.payload, ...state.notes],
       };
     case DELETE_NOTE:
       return {
@@ -39,12 +40,16 @@ export default (state, action) => {
         ...state,
         current: action.payload,
       };
+    case RENDER_CONTENT:
+      return {
+        ...state,
+        renderedContent: action.payload,
+      };
     case CLEAR_CURRENT:
       return {
         ...state,
         current: null,
       };
-
     case FILTER_NOTES:
       return {
         ...state,
@@ -65,6 +70,7 @@ export default (state, action) => {
         notes: [],
         filtered: [],
         current: null,
+        renderedContent: null,
         error: '',
       };
     case NOTES_ERROR:

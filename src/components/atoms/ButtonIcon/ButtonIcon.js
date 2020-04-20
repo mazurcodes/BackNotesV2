@@ -12,7 +12,6 @@ const ButtonIcon = styled.button`
   border-radius: 7px;
   :hover {
     cursor: pointer;
-    border: 2px solid white;
   }
 `;
 
