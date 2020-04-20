@@ -1,3 +1,4 @@
+import xss from 'xss';
 import mdIt from '../markdownIt';
 import { notesApi, fetchConfig } from '../api';
 import {
@@ -90,13 +91,12 @@ export const updateNoteAction = async (note, dispatch) => {
   }
 };
 
-// TODO: instead of calling this function in other functions let
-// useEffect from NoteState do it on state.current change :)
 export const renderContentAction = (content, dispatch) => {
   const renderedContent = mdIt.render(content);
+  const sanitizedContent = xss(renderedContent);
   dispatch({
     type: RENDER_CONTENT,
-    payload: renderedContent,
+    payload: sanitizedContent,
   });
 };
 

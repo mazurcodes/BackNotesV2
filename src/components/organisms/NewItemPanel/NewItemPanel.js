@@ -85,7 +85,7 @@ const NewItemPanel = (props) => {
     const note = {
       title: values.title,
       desc: values.desc.replace(/(\r\n|\n|\r)/gm, ' '),
-      content: 'Write your notes here :)',
+      content: '# Write your notes here :) \n ## Hellow',
     };
 
     addNote(note);

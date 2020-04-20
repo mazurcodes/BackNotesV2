@@ -1,8 +1,9 @@
 import MarkdownIt from 'markdown-it';
-import mdAnchor from 'markdown-it-anchor';
 import mdToc from 'markdown-it-table-of-contents';
+import mdAnchor from 'markdown-it-anchor';
 
 const mdIt = new MarkdownIt();
-mdIt.use(mdAnchor).use(mdToc);
+mdIt.use(mdToc);
+mdIt.use(mdAnchor);
 
 export default mdIt;
