@@ -42,11 +42,11 @@ const EditForm = () => {
 
   const onChange = (change) => {
     const noteFields = {};
-    const { errors, modified, values, pristine } = change;
+    const { modified, values } = change;
     if (modified.title) noteFields.title = values.title;
     if (modified.desc) noteFields.desc = values.desc;
-    if (modified.content) noteFields.content = values.content || '';
-    !errors[0] && !pristine && updateCurrent(noteFields);
+    if (modified.content) noteFields.content = values.content || '\n';
+    updateCurrent(noteFields);
   };
 
   return (

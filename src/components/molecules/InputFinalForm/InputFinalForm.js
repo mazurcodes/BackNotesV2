@@ -27,7 +27,7 @@ const InputFieldFinalForm = ({ input, meta, label }) => (
       {label}:
     </StyledLabel>
     <StyledInput type="text" {...input} id={input.name} />
-    {meta.touched && meta.error && <span>{meta.error}</span>}
+    {meta.error && <span>{meta.error}</span>}
   </div>
 );
 
