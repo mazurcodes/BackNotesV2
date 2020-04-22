@@ -45,7 +45,7 @@ const EditForm = () => {
     const { errors, modified, values, pristine } = change;
     if (modified.title) noteFields.title = values.title;
     if (modified.desc) noteFields.desc = values.desc;
-    if (modified.content) noteFields.content = values.content;
+    if (modified.content) noteFields.content = values.content || '';
     !errors[0] && !pristine && updateCurrent(noteFields);
   };
 

@@ -93,7 +93,6 @@ export const updateNoteAction = async (note, dispatch) => {
 };
 
 const renderAndSanitizeContent = (content, dispatch) => {
-  if (!content) return;
   const renderedContent = mdIt.render(content);
   const sanitizedContent = xss(renderedContent);
   dispatch({
@@ -126,7 +125,7 @@ export const updateCurrentAction = (noteFields, dispatch) => {
     type: UPDATE_CURRENT,
     payload: noteFields,
   });
-  noteFields.content && renderAndSanitizeContent(noteFields.content, dispatch);
+  renderAndSanitizeContent(noteFields.content, dispatch);
   // TODO: Action for setTimeout updateNote
 };
 
