@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Field, FormSpy } from 'react-final-form';
 import styled from 'styled-components';
-import Input from '../../atoms/Input/Input';
-import Paragraph from '../../atoms/Paragraph/Paragraph';
-import TextArea from '../../atoms/TextArea/TextArea';
+import notesContext from '../../../context/notes/notesContext';
+import Spacer from '../../atoms/Spacer/Spacer';
+import InputFieldFinalForm from '../../molecules/InputFinalForm/InputFinalForm';
+import EditorField from '../EditorField/EditorField';
 
 const StyledForm = styled.form`
   flex: 1;
@@ -12,147 +13,64 @@ const StyledForm = styled.form`
   padding: 20px 0;
 `;
 
-const StyledLabel = styled(Paragraph)`
-  display: block;
-  margin-left: 50px;
-`;
-
-const StyledInput = styled(Input)`
-  margin-bottom: 20px;
-  margin-left: 50px;
-  border-radius: 0;
-  background-color: white;
-  text-align: left;
-  border: 1px solid rgb(240, 240, 240);
-  padding-left: 10px;
-  padding-right: 10px;
-`;
-
-const StyledInputDesc = styled(StyledInput)`
-  width: calc(400px + 20vw);
-`;
-
-const StyledEditPreviewField = styled.div`
-  flex: 1;
-  display: flex;
-`;
-
-const StyledEditField = styled(TextArea)`
-  /* min-height: 100%; */
-  flex: 1;
-`;
-
-const StyledPreviewField = styled.div`
-  flex: 1;
-  padding: 20px 50px;
-`;
-
-const EditSpacer = styled.div`
-  width: 20px;
-  background-color: lightsalmon;
-`;
-
 const EditForm = () => {
-  const onSubmit = (values) => console.log(values);
+  const { initialCurrentValues, updateCurrent } = useContext(notesContext);
 
-  // TODO: Validate form
+  const onSubmit = (values) => {
+    // TODO: After closing editor with button submit
+    console.log(values);
+  };
 
-  // const validate = (values) => {
-  //   const errors = {};
-  //   console.log('validate:', values);
-  //   return errors;
-  // };
+  const validate = (values) => {
+    const errors = {};
 
-  const onChange = (change) => console.log(change);
+    if (!values.title) {
+      errors.title = ' Title is required';
+    }
+    if (values.title && values.title.length > 24) {
+      errors.title = ' Max lenght of the title is 24 characters';
+    }
+
+    if (!values.desc) {
+      errors.desc = ' Description is required';
+    }
+    if (values.desc && values.desc.length > 60) {
+      errors.desc = ' Max lenght of the description is 24 characters';
+    }
+    return errors;
+  };
+
+  const onChange = (change) => {
+    const noteFields = {};
+    const { errors, modified, values, pristine } = change;
+    if (modified.title) noteFields.title = values.title;
+    if (modified.desc) noteFields.desc = values.desc;
+    if (modified.content) noteFields.content = values.content;
+    !errors[0] && !pristine && updateCurrent(noteFields);
+  };
 
   return (
     <Form
       className="Form"
       onSubmit={onSubmit}
-      initialValues={{
-        title: 'hello from initial values',
-        description: 'this is new description from somewhere',
-      }}
-      // TODO: Validate function
-      // validate={validate}
+      initialValues={initialCurrentValues}
+      validate={validate}
       render={({ handleSubmit }) => (
         <StyledForm onSubmit={handleSubmit}>
           <FormSpy
             onChange={onChange}
-            subscription={{ values: true, errors: true, modified: true }}
+            subscription={{ values: true, errors: true, modified: true, pristine: true }}
           />
-          <Field name="title">
-            {({ input, meta }) => (
-              <div>
-                <StyledLabel htmlFor="title" as="label">
-                  Title:
-                </StyledLabel>
-                <StyledInput type="text" {...input} id="title" />
-                {meta.touched && meta.error && <span>{meta.error}</span>}
-              </div>
-            )}
-          </Field>
-          <Field name="description">
-            {({ input, meta }) => (
-              <div>
-                <StyledLabel htmlFor="desc" as="label">
-                  Description:
-                </StyledLabel>
-                <StyledInputDesc type="text" {...input} id="desc" />
-                {meta.touched && meta.error && <span>{meta.error}</span>}
-              </div>
-            )}
-          </Field>
-          <StyledEditPreviewField>
-            <StyledEditField />
-            <EditSpacer />
-            <StyledPreviewField>
-              dfdfdhgfh fghgfh fghgfhfgh fgh fghgfhfgh fghgfhfgh
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-              <div>fgfgfdgfgfdgfd</div>
-            </StyledPreviewField>
-          </StyledEditPreviewField>
+          <Field
+            name="title"
+            render={(props) => <InputFieldFinalForm label="Title" {...props} />}
+          />
+          <Field
+            name="desc"
+            render={(props) => <InputFieldFinalForm label="Description" {...props} />}
+          />
+          <Spacer height="5px" width="100%" color="#ddd" />
+          <Field name="content" component={EditorField} />
         </StyledForm>
       )}
     />

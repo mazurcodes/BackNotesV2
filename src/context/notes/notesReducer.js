@@ -10,6 +10,7 @@ import {
   CLEAR_STATE,
   NOTES_ERROR,
   RENDER_CONTENT,
+  UPDATE_CURRENT,
 } from '../types';
 
 export default (state, action) => {
@@ -39,6 +40,15 @@ export default (state, action) => {
       return {
         ...state,
         current: action.payload,
+        initialCurrentValues: action.payload,
+      };
+    case UPDATE_CURRENT:
+      return {
+        ...state,
+        current: {
+          ...state.current,
+          ...action.payload,
+        },
       };
     case RENDER_CONTENT:
       return {

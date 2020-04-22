@@ -9,6 +9,7 @@ import openIcon from '../../../assets/icons/icon-open.svg';
 import editIcon from '../../../assets/icons/icon-edit.svg';
 import deleteIcon from '../../../assets/icons/icon-delete.svg';
 import notesContext from '../../../context/notes/notesContext';
+import routes from '../../../routes/routes';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -84,15 +85,17 @@ const StyledDivider = styled.div`
   margin: 0 10px;
 `;
 
-const Card = ({ note: { id, title, desc } }) => {
+const Card = ({ note: { id, title, desc }, openIn }) => {
   const { deleteNote, setCurrent } = useContext(notesContext);
 
   const onOpen = () => {
     setCurrent(id);
+    openIn({ redirect: true, route: routes.preview });
   };
 
   const onEdit = () => {
     setCurrent(id);
+    openIn({ redirect: true, route: routes.editor });
   };
 
   const onDelete = () => {
@@ -126,6 +129,7 @@ Card.propTypes = {
     title: PropTypes.string,
     desc: PropTypes.string,
   }).isRequired,
+  openIn: PropTypes.func.isRequired,
 };
 
 export default Card;

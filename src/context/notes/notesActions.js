@@ -13,6 +13,7 @@ import {
   CLEAR_STATE,
   FILTER_NOTES,
   RENDER_CONTENT,
+  UPDATE_CURRENT,
 } from '../types';
 
 export const getNotesAction = async (dispatch) => {
@@ -91,7 +92,8 @@ export const updateNoteAction = async (note, dispatch) => {
   }
 };
 
-export const renderContentAction = (content, dispatch) => {
+const renderAndSanitizeContent = (content, dispatch) => {
+  if (!content) return;
   const renderedContent = mdIt.render(content);
   const sanitizedContent = xss(renderedContent);
   dispatch({
@@ -109,7 +111,7 @@ export const setCurrentAction = async (id, dispatch) => {
       type: SET_CURRENT,
       payload: note,
     });
-    renderContentAction(note.content, dispatch);
+    renderAndSanitizeContent(note.content, dispatch);
   } catch (err) {
     console.log('Set current file to edit error: ', err);
     dispatch({
@@ -119,12 +121,12 @@ export const setCurrentAction = async (id, dispatch) => {
   }
 };
 
-export const updateCurrentAction = (note, dispatch) => {
+export const updateCurrentAction = (noteFields, dispatch) => {
   dispatch({
-    type: SET_CURRENT,
-    payload: note,
+    type: UPDATE_CURRENT,
+    payload: noteFields,
   });
-  renderContentAction(note.content, dispatch);
+  noteFields.content && renderAndSanitizeContent(noteFields.content, dispatch);
   // TODO: Action for setTimeout updateNote
 };
 

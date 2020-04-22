@@ -21,6 +21,7 @@ const NotesState = ({ children }) => {
     notes: [],
     filtered: [],
     current: null,
+    initialCurrentValues: null,
     renderedContent: null,
     error: '',
   };
@@ -151,6 +152,7 @@ const NotesState = ({ children }) => {
         notes: state.notes,
         filtered: state.filtered,
         current: state.current,
+        initialCurrentValues: state.initialCurrentValues,
         renderedContent: state.renderedContent,
         error: state.error,
         getNotes,
