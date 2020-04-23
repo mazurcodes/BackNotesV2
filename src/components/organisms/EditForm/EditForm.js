@@ -42,11 +42,15 @@ const EditForm = () => {
 
   const onChange = (change) => {
     const noteFields = {};
-    const { modified, values } = change;
+    const { modified, values, pristine } = change;
     if (modified.title) noteFields.title = values.title;
     if (modified.desc) noteFields.desc = values.desc;
     if (modified.content) noteFields.content = values.content || '\n';
-    updateCurrent(noteFields);
+    // next line is to ensure that when deleting last character from content field
+    // we provide '\n' character but the pristine property of the form sets true
+    // in this case updateCurrent can't distiguish if the form just get mounted
+    //  or we deleted last character.
+    (!pristine || noteFields.content === '\n') && updateCurrent(noteFields);
   };
 
   return (

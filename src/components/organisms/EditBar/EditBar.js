@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import Input from '../../atoms/Input/Input';
-import Paragraph from '../../atoms/Paragraph/Paragraph';
 import GlobalContext from '../../../context/global/globalContext';
+import NotesContext from '../../../context/notes/notesContext';
+import Paragraph from '../../atoms/Paragraph/Paragraph';
+import Input from '../../atoms/Input/Input';
 import TitleBar from '../TitleBar/TitleBar';
 import routes from '../../../routes/routes';
 
@@ -40,13 +41,16 @@ const StyledInput = styled(Input)`
 
 const EditBar = () => {
   const { currentPage } = useContext(GlobalContext);
+  const { initialCurrentValues } = useContext(NotesContext);
 
   if (currentPage === routes.notes) return <TitleBar />;
   return (
     <StyledWrapper>
       <StyledTitleField>
         <StyledTitle>Current file:</StyledTitle>
-        <StyledDataContent>React </StyledDataContent>
+        <StyledDataContent>
+          {initialCurrentValues ? initialCurrentValues.title : ''}
+        </StyledDataContent>
       </StyledTitleField>
       <StyledInput placeholder="Search" />
     </StyledWrapper>
