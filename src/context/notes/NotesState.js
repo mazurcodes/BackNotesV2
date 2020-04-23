@@ -14,6 +14,7 @@ import {
   clearFilterAction,
   clearNotesStateAction,
   updateCurrentAction,
+  autosaveAction,
 } from './notesActions';
 
 const NotesState = ({ children }) => {
@@ -23,6 +24,7 @@ const NotesState = ({ children }) => {
     current: null,
     initialCurrentValues: null,
     renderedContent: null,
+    timeoutIndex: 0,
     error: '',
   };
   const [state, dispatch] = useReducer(notesReducer, initialState);
@@ -103,8 +105,10 @@ const NotesState = ({ children }) => {
    *      })
    *
    */
-  const updateCurrent = (note) => updateCurrentAction(note, dispatch);
+  const updateCurrent = (note) => updateCurrentAction(note, state, dispatch);
 
+  const autosaveNote = (time) =>
+    autosaveAction(state.timeoutIndex, time, () => updateNote(state.current), dispatch);
   /**
    * Context action for clearing current note in state.
    *
@@ -152,6 +156,7 @@ const NotesState = ({ children }) => {
         notes: state.notes,
         filtered: state.filtered,
         current: state.current,
+        timeoutIndex: state.timeoutIndex,
         initialCurrentValues: state.initialCurrentValues,
         renderedContent: state.renderedContent,
         error: state.error,
@@ -165,6 +170,7 @@ const NotesState = ({ children }) => {
         filterNotes,
         clearFilter,
         clearNotesState,
+        autosaveNote,
       }}
     >
       <ContextDevTool context={NotesContext} id="notesContext" displayName="Notes Context" />

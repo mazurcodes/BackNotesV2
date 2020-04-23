@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Form, Field, FormSpy } from 'react-final-form';
 import styled from 'styled-components';
 import notesContext from '../../../context/notes/notesContext';
@@ -14,7 +14,14 @@ const StyledForm = styled.form`
 `;
 
 const EditForm = () => {
-  const { initialCurrentValues, updateCurrent } = useContext(notesContext);
+  const { current, initialCurrentValues, updateCurrent, autosaveNote } = useContext(notesContext);
+
+  useEffect(() => {
+    const isCurrentReady = current && initialCurrentValues;
+    // const isCurrentModified = isCurrentReady  && JSON.stringify(current) === JSON.stringify(initialCurrentValues)
+    isCurrentReady && autosaveNote(3000);
+    // eslint-disable-next-line
+  }, [current]);
 
   const onSubmit = (values) => {
     // TODO: After closing editor with button submit
@@ -42,7 +49,7 @@ const EditForm = () => {
 
   const onChange = (change) => {
     const noteFields = {};
-    const { modified, values, pristine } = change;
+    const { modified, values, pristine, errors } = change;
     if (modified.title) noteFields.title = values.title;
     if (modified.desc) noteFields.desc = values.desc;
     if (modified.content) noteFields.content = values.content || '\n';
@@ -50,7 +57,8 @@ const EditForm = () => {
     // we provide '\n' character but the pristine property of the form sets true
     // in this case updateCurrent can't distiguish if the form just get mounted
     //  or we deleted last character.
-    (!pristine || noteFields.content === '\n') && updateCurrent(noteFields);
+    const isError = Object.keys(errors).length > 0;
+    !isError && (!pristine || noteFields.content === '\n') && updateCurrent(noteFields);
   };
 
   return (

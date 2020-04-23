@@ -14,6 +14,7 @@ import {
   FILTER_NOTES,
   RENDER_CONTENT,
   UPDATE_CURRENT,
+  SET_TIMEOUT,
 } from '../types';
 
 export const getNotesAction = async (dispatch) => {
@@ -76,12 +77,15 @@ export const deleteNoteAction = async (id, dispatch) => {
 };
 
 export const updateNoteAction = async (note, dispatch) => {
+  console.log(note);
+  if (!note) return;
   try {
     const response = await fetch(notesApi(note.id), fetchConfig('PUT', note));
     const noteData = await response.json();
     if (!response.ok) throw noteData.error;
     dispatch({
       type: UPDATE_NOTE,
+      payload: note,
     });
   } catch (err) {
     console.log('Update note error: ', err);
@@ -121,13 +125,23 @@ export const setCurrentAction = async (id, dispatch) => {
   }
 };
 
-export const updateCurrentAction = (noteFields, dispatch) => {
+export const autosaveAction = (timeoutIndex, timeoutTime, actionCallback, dispatch) => {
+  timeoutIndex && clearTimeout(timeoutIndex);
+  const timeIndex = setTimeout(actionCallback, timeoutTime);
+  dispatch({
+    type: SET_TIMEOUT,
+    payload: timeIndex,
+  });
+};
+
+export const updateCurrentAction = (noteFields, state, dispatch) => {
   dispatch({
     type: UPDATE_CURRENT,
     payload: noteFields,
   });
   renderAndSanitizeContent(noteFields.content, dispatch);
   // TODO: Action for setTimeout updateNote
+  // autosaveAction(state.timeoutIndex, 3000, () => updateNoteAction(state.current, dispatch), dispatch)
 };
 
 export const clearCurrentAction = (dispatch) => dispatch({ type: CLEAR_CURRENT });

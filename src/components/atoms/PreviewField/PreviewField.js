@@ -6,7 +6,11 @@ const PreviewField = () => {
   const { renderedContent } = useContext(notesContext);
   const renderedHtml = useRef(null);
   useEffect(() => {
-    renderedHtml.current.innerHTML = renderedContent;
+    if (!renderedContent) {
+      renderedHtml.current.innerHTML = '<h1>Loading...</h1>  ...or note not selected :(';
+    } else {
+      renderedHtml.current.innerHTML = renderedContent;
+    }
   }, [renderedContent]);
   return <div className="markdown-body" ref={renderedHtml} />;
 };
