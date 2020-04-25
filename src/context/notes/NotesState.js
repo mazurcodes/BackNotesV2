@@ -1,18 +1,25 @@
 import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ContextDevTool from 'react-context-devtool';
+import mdIt from '../markdownIt';
 import NotesContext from './notesContext';
 import notesReducer from './notesReducer';
 import {
-  getNotesAction,
-  addNoteAction,
-  deleteNoteAction,
-  updateNoteAction,
-  setCurrentAction,
-  updateCurrentAction,
-  renderContentAction,
-} from './notesActions';
-import { SET_TIMEOUT, CLEAR_CURRENT, FILTER_NOTES, CLEAR_FILTER, CLEAR_STATE } from '../types';
+  SET_TIMEOUT,
+  CLEAR_CURRENT,
+  FILTER_NOTES,
+  CLEAR_FILTER,
+  CLEAR_STATE,
+  GET_NOTES,
+  NOTES_ERROR,
+  ADD_NOTE,
+  DELETE_NOTE,
+  UPDATE_NOTE,
+  SET_CURRENT,
+  UPDATE_CURRENT,
+  RENDER_CONTENT,
+} from '../types';
+import { notesApi, fetchConfig } from '../api';
 
 const NotesState = ({ children }) => {
   const initialState = {
@@ -28,18 +35,6 @@ const NotesState = ({ children }) => {
   const [state, dispatch] = useReducer(notesReducer, initialState);
 
   /**
-   * Helper function rendering HTML
-   * state.current.content (markdown) >>> state.renderedContent (HTML)
-   *
-   */
-  useEffect(() => {
-    if (!state.current) return;
-    const result = renderContentAction(state.current.content);
-    dispatch(result);
-    // eslint-disable-next-line
-  }, [state.current]);
-
-  /**
    * Context action for fetching all user notes.
    *
    * Example:
@@ -48,7 +43,23 @@ const NotesState = ({ children }) => {
    *
    * Accepts no arguments
    */
-  const getNotes = () => getNotesAction().then((result) => dispatch(result));
+  const getNotes = async () => {
+    try {
+      const response = await fetch(notesApi(), fetchConfig());
+      const notesList = await response.json();
+      if (!response.ok) throw notesList.error;
+      dispatch({
+        type: GET_NOTES,
+        payload: notesList,
+      });
+    } catch (err) {
+      console.log('Get notes error: ', err);
+      dispatch({
+        type: NOTES_ERROR,
+        payload: err,
+      });
+    }
+  };
 
   /**
    * Context action for sending new note to DB.
@@ -59,7 +70,27 @@ const NotesState = ({ children }) => {
    *      addNote({title: 'hello', desc: 'yo', content: 'hey'})
    *
    */
-  const addNote = (note) => addNoteAction(note).then((result) => dispatch(result));
+  const addNote = async (note) => {
+    try {
+      const response = await fetch(notesApi(), fetchConfig('POST', note));
+      const noteStatus = await response.json();
+      if (!response.ok) throw noteStatus.error;
+      const newNote = {
+        ...note,
+        id: noteStatus.id,
+      };
+      dispatch({
+        type: ADD_NOTE,
+        payload: newNote,
+      });
+    } catch (err) {
+      console.log('Add note error: ', err);
+      dispatch({
+        type: NOTES_ERROR,
+        payload: err,
+      });
+    }
+  };
 
   /**
    * Context action for deleting note in DB.
@@ -70,7 +101,23 @@ const NotesState = ({ children }) => {
    *      deleteNote('a12344232dfdf534')
    *
    */
-  const deleteNote = (id) => deleteNoteAction(id).then((result) => dispatch(result));
+  const deleteNote = async (id) => {
+    try {
+      const response = await fetch(notesApi(id), fetchConfig('DELETE'));
+      const noteData = await response.json();
+      if (!response.ok) throw noteData.error;
+      dispatch({
+        type: DELETE_NOTE,
+        payload: id,
+      });
+    } catch (err) {
+      console.log('Delete note error: ', err);
+      dispatch({
+        type: NOTES_ERROR,
+        payload: err,
+      });
+    }
+  };
 
   /**
    * Context action for updating note in DB.
@@ -86,23 +133,23 @@ const NotesState = ({ children }) => {
    *      })
    *
    */
-  const updateNote = (note) => updateNoteAction(note).then((result) => dispatch(result));
-
-  /**
-   * Auto save helper
-   */
-  useEffect(() => {
-    const autosaveTime = 3000;
-    if (state.current) {
-      clearTimeout(state.timeoutIndex);
-      const timeIndex = setTimeout(() => updateNote(state.current), autosaveTime);
+  const updateNote = async (note) => {
+    try {
+      const response = await fetch(notesApi(note.id), fetchConfig('PUT', note));
+      const noteData = await response.json();
+      if (!response.ok) throw noteData.error;
       dispatch({
-        type: SET_TIMEOUT,
-        payload: timeIndex,
+        type: UPDATE_NOTE,
+        payload: note,
+      });
+    } catch (err) {
+      console.log('Update note error: ', err);
+      dispatch({
+        type: NOTES_ERROR,
+        payload: err,
       });
     }
-    // eslint-disable-next-line
-  }, [state.current]);
+  };
 
   /**
    * Context action for downloading single note from DB.
@@ -115,7 +162,23 @@ const NotesState = ({ children }) => {
    *      setCurrent('sd2345frt')
    *
    */
-  const setCurrent = (id) => setCurrentAction(id).then((result) => dispatch(result));
+  const setCurrent = async (id) => {
+    try {
+      const response = await fetch(notesApi(id), fetchConfig());
+      const note = await response.json();
+      if (!response.ok) throw note.error;
+      dispatch({
+        type: SET_CURRENT,
+        payload: note,
+      });
+    } catch (err) {
+      console.log('Set current file to edit error: ', err);
+      dispatch({
+        type: NOTES_ERROR,
+        payload: err,
+      });
+    }
+  };
 
   /**
    * Context action for updating current note in state.
@@ -131,9 +194,28 @@ const NotesState = ({ children }) => {
    *      })
    *
    */
-  const updateCurrent = (note) => {
-    const result = updateCurrentAction(note);
-    dispatch(result);
+  const updateCurrent = (noteFields) => dispatch({ type: UPDATE_CURRENT, payload: noteFields });
+
+  /**
+   * Context action for updating current note in state.
+   *
+   * Example:
+   *
+   *      updateCurrent(note);
+   *      updateCurrent({
+   *        id: '5dfgdf4354353dgfsdfs',
+   *        title: 'hello',
+   *        desc: 'yo',
+   *        content: 'hey'
+   *      })
+   *
+   */
+  const renderContent = (content) => {
+    const renderedContent = mdIt.render(content);
+    dispatch({
+      type: RENDER_CONTENT,
+      payload: renderedContent,
+    });
   };
   /**
    * Context action for clearing current note in state.
@@ -175,6 +257,40 @@ const NotesState = ({ children }) => {
    *
    */
   const clearNotesState = () => dispatch({ type: CLEAR_STATE });
+
+  /**
+   *****************************************************************************************
+   *
+   *                                         HELPERS
+   *
+   *****************************************************************************************
+   */
+
+  /**
+   * Helper function rendering HTML
+   * state.current.content (markdown) >>> state.renderedContent (HTML)
+   *
+   */
+  useEffect(() => {
+    if (!state.current) return;
+    renderContent(state.current.content);
+    // eslint-disable-next-line
+  }, [state.current]);
+
+  /**
+   * Helper function for autosaving
+   */
+  useEffect(() => {
+    if (state.current) return;
+    const autosaveTime = 3000;
+    clearTimeout(state.timeoutIndex);
+    const timeIndex = setTimeout(() => updateNote(state.current), autosaveTime);
+    dispatch({
+      type: SET_TIMEOUT,
+      payload: timeIndex,
+    });
+    // eslint-disable-next-line
+  }, [state.current]);
 
   return (
     <NotesContext.Provider
