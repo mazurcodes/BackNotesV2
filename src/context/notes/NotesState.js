@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ContextDevTool from 'react-context-devtool';
 import NotesContext from './notesContext';
@@ -9,13 +9,10 @@ import {
   deleteNoteAction,
   updateNoteAction,
   setCurrentAction,
-  clearCurrentAction,
-  filterNotesAction,
-  clearFilterAction,
-  clearNotesStateAction,
   updateCurrentAction,
-  autosaveAction,
+  renderContentAction,
 } from './notesActions';
+import { SET_TIMEOUT, CLEAR_CURRENT, FILTER_NOTES, CLEAR_FILTER, CLEAR_STATE } from '../types';
 
 const NotesState = ({ children }) => {
   const initialState = {
@@ -27,7 +24,20 @@ const NotesState = ({ children }) => {
     timeoutIndex: 0,
     error: '',
   };
+
   const [state, dispatch] = useReducer(notesReducer, initialState);
+
+  /**
+   * Helper function rendering HTML
+   * state.current.content (markdown) >>> state.renderedContent (HTML)
+   *
+   */
+  useEffect(() => {
+    if (!state.current) return;
+    const result = renderContentAction(state.current.content);
+    dispatch(result);
+    // eslint-disable-next-line
+  }, [state.current]);
 
   /**
    * Context action for fetching all user notes.
@@ -38,7 +48,7 @@ const NotesState = ({ children }) => {
    *
    * Accepts no arguments
    */
-  const getNotes = () => getNotesAction(dispatch);
+  const getNotes = () => getNotesAction().then((result) => dispatch(result));
 
   /**
    * Context action for sending new note to DB.
@@ -49,7 +59,7 @@ const NotesState = ({ children }) => {
    *      addNote({title: 'hello', desc: 'yo', content: 'hey'})
    *
    */
-  const addNote = (note) => addNoteAction(note, dispatch);
+  const addNote = (note) => addNoteAction(note).then((result) => dispatch(result));
 
   /**
    * Context action for deleting note in DB.
@@ -60,7 +70,7 @@ const NotesState = ({ children }) => {
    *      deleteNote('a12344232dfdf534')
    *
    */
-  const deleteNote = (id) => deleteNoteAction(id, dispatch);
+  const deleteNote = (id) => deleteNoteAction(id).then((result) => dispatch(result));
 
   /**
    * Context action for updating note in DB.
@@ -76,7 +86,23 @@ const NotesState = ({ children }) => {
    *      })
    *
    */
-  const updateNote = (note) => updateNoteAction(note, dispatch);
+  const updateNote = (note) => updateNoteAction(note).then((result) => dispatch(result));
+
+  /**
+   * Auto save helper
+   */
+  useEffect(() => {
+    const autosaveTime = 3000;
+    if (state.current) {
+      clearTimeout(state.timeoutIndex);
+      const timeIndex = setTimeout(() => updateNote(state.current), autosaveTime);
+      dispatch({
+        type: SET_TIMEOUT,
+        payload: timeIndex,
+      });
+    }
+    // eslint-disable-next-line
+  }, [state.current]);
 
   /**
    * Context action for downloading single note from DB.
@@ -89,10 +115,10 @@ const NotesState = ({ children }) => {
    *      setCurrent('sd2345frt')
    *
    */
-  const setCurrent = (id) => setCurrentAction(id, dispatch);
+  const setCurrent = (id) => setCurrentAction(id).then((result) => dispatch(result));
 
   /**
-   * Context action for updatinf current note in state.
+   * Context action for updating current note in state.
    *
    * Example:
    *
@@ -105,10 +131,10 @@ const NotesState = ({ children }) => {
    *      })
    *
    */
-  const updateCurrent = (note) => updateCurrentAction(note, state, dispatch);
-
-  const autosaveNote = (time) =>
-    autosaveAction(state.timeoutIndex, time, () => updateNote(state.current), dispatch);
+  const updateCurrent = (note) => {
+    const result = updateCurrentAction(note);
+    dispatch(result);
+  };
   /**
    * Context action for clearing current note in state.
    *
@@ -117,7 +143,7 @@ const NotesState = ({ children }) => {
    *      clearCurrent()
    *
    */
-  const clearCurrent = () => clearCurrentAction(dispatch);
+  const clearCurrent = () => dispatch({ type: CLEAR_CURRENT });
 
   /**
    * Context action for filtering notes in state.
@@ -128,7 +154,7 @@ const NotesState = ({ children }) => {
    *      filterNotes('hello')
    *
    */
-  const filterNotes = (word) => filterNotesAction(word, dispatch);
+  const filterNotes = (word) => dispatch({ type: FILTER_NOTES, payload: word });
 
   /**
    * Context action for filtering notes in state.
@@ -138,7 +164,7 @@ const NotesState = ({ children }) => {
    *      clearFilter()
    *
    */
-  const clearFilter = () => clearFilterAction(dispatch);
+  const clearFilter = () => dispatch({ type: CLEAR_FILTER });
 
   /**
    * Context action for return to initial state.
@@ -148,7 +174,7 @@ const NotesState = ({ children }) => {
    *      clearNotesState()
    *
    */
-  const clearNotesState = () => clearNotesStateAction(dispatch);
+  const clearNotesState = () => dispatch({ type: CLEAR_STATE });
 
   return (
     <NotesContext.Provider
@@ -170,7 +196,6 @@ const NotesState = ({ children }) => {
         filterNotes,
         clearFilter,
         clearNotesState,
-        autosaveNote,
       }}
     >
       <ContextDevTool context={NotesContext} id="notesContext" displayName="Notes Context" />

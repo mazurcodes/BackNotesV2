@@ -1,10 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import { Redirect } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import Input from '../../atoms/Input/Input';
 import Button from '../../atoms/Button/Button';
 import notesContext from '../../../context/notes/notesContext';
+import routes from '../../../routes/routes';
 
 const StyledWrapper = styled.div`
   width: 600px;
@@ -78,6 +80,8 @@ const StyledButtonSave = styled(Button)`
 const NewItemPanel = (props) => {
   const { isActive, panelToggle } = props;
 
+  const [redirect, setRedirect] = useState(false);
+
   const { addNote } = useContext(notesContext);
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -92,6 +96,10 @@ const NewItemPanel = (props) => {
     panelToggle();
     await sleep(100);
   };
+
+  const openEditor = () => setTimeout(() => setRedirect(true), 10);
+
+  if (redirect) return <Redirect push to={routes.editor} />;
 
   return (
     <StyledWrapper active={isActive}>
@@ -160,7 +168,7 @@ const NewItemPanel = (props) => {
                 </StyledFieldWrapper>
               )}
             />
-            <StyledButtonOpen type="submit" disabled={submitting || pristine}>
+            <StyledButtonOpen type="submit" disabled={submitting || pristine} onClick={openEditor}>
               Create and open in editor
             </StyledButtonOpen>
             <StyledButtonSave type="submit" disabled={submitting || pristine}>

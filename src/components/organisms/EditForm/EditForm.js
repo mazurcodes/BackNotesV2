@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Form, Field, FormSpy } from 'react-final-form';
 import styled from 'styled-components';
 import notesContext from '../../../context/notes/notesContext';
@@ -14,14 +14,7 @@ const StyledForm = styled.form`
 `;
 
 const EditForm = () => {
-  const { current, initialCurrentValues, updateCurrent, autosaveNote } = useContext(notesContext);
-
-  useEffect(() => {
-    const isCurrentReady = current && initialCurrentValues;
-    // const isCurrentModified = isCurrentReady  && JSON.stringify(current) === JSON.stringify(initialCurrentValues)
-    isCurrentReady && autosaveNote(3000);
-    // eslint-disable-next-line
-  }, [current]);
+  const { initialCurrentValues, updateCurrent } = useContext(notesContext);
 
   const onSubmit = (values) => {
     // TODO: After closing editor with button submit
@@ -48,17 +41,17 @@ const EditForm = () => {
   };
 
   const onChange = (change) => {
-    const noteFields = {};
-    const { modified, values, pristine, errors } = change;
-    if (modified.title) noteFields.title = values.title;
-    if (modified.desc) noteFields.desc = values.desc;
+    const { modified, values, errors } = change;
+
+    const noteFields = { ...values };
+
+    // content can be empty but then it will get into trouble with
+    // rendering empty markdown in updateCurrent action.
     if (modified.content) noteFields.content = values.content || '\n';
-    // next line is to ensure that when deleting last character from content field
-    // we provide '\n' character but the pristine property of the form sets true
-    // in this case updateCurrent can't distiguish if the form just get mounted
-    //  or we deleted last character.
-    const isError = Object.keys(errors).length > 0;
-    !isError && (!pristine || noteFields.content === '\n') && updateCurrent(noteFields);
+
+    const isError = Object.keys(errors).length < 1;
+    const isModified = Object.values(modified).some((value) => value);
+    isError && isModified && updateCurrent(noteFields);
   };
 
   return (
@@ -71,7 +64,7 @@ const EditForm = () => {
         <StyledForm onSubmit={handleSubmit}>
           <FormSpy
             onChange={onChange}
-            subscription={{ values: true, errors: true, modified: true, pristine: true }}
+            subscription={{ values: true, errors: true, modified: true }}
           />
           <Field
             name="title"

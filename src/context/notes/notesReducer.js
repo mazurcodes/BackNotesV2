@@ -25,6 +25,8 @@ export default (state, action) => {
       return {
         ...state,
         notes: [action.payload, ...state.notes],
+        current: action.payload,
+        initialCurrentValues: action.payload,
       };
     case DELETE_NOTE:
       return {
@@ -94,7 +96,9 @@ export default (state, action) => {
         ...state,
         error: action.payload,
       };
-
+    case 'DEMO':
+      console.log(action.payload);
+      return state;
     default:
       return state;
   }
