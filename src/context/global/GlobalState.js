@@ -7,7 +7,7 @@ import { SET_PAGE } from '../types';
 
 const GlobalState = ({ children }) => {
   const initialState = {
-    currentPAge: '',
+    currentPage: '',
   };
 
   const [state, dispatch] = useReducer(globalReducer, initialState);

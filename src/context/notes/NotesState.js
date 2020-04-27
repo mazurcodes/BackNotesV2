@@ -35,6 +35,14 @@ const NotesState = ({ children }) => {
   const [state, dispatch] = useReducer(notesReducer, initialState);
 
   /**
+   *****************************************************************************************
+   *
+   *                                         ACTIONS
+   *
+   *****************************************************************************************
+   */
+
+  /**
    * Context action for fetching all user notes.
    *
    * Example:
@@ -137,6 +145,7 @@ const NotesState = ({ children }) => {
     try {
       const response = await fetch(notesApi(note.id), fetchConfig('PUT', note));
       const noteData = await response.json();
+      console.log(noteData);
       if (!response.ok) throw noteData.error;
       dispatch({
         type: UPDATE_NOTE,
@@ -267,7 +276,7 @@ const NotesState = ({ children }) => {
    */
 
   /**
-   * Helper function rendering HTML
+   * Helper function for rendering HTML
    * state.current.content (markdown) >>> state.renderedContent (HTML)
    *
    */
@@ -278,10 +287,10 @@ const NotesState = ({ children }) => {
   }, [state.current]);
 
   /**
-   * Helper function for autosaving
+   * Helper function for timeout autosaving
    */
   useEffect(() => {
-    if (state.current) return;
+    if (!state.current) return;
     const autosaveTime = 3000;
     clearTimeout(state.timeoutIndex);
     const timeIndex = setTimeout(() => updateNote(state.current), autosaveTime);

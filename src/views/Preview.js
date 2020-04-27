@@ -1,21 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
-import UserTemplate from '../templates/UserTemplate';
-import PreviewField from '../components/atoms/PreviewField/PreviewField';
-
-const StyledPreviewWrapper = styled.div`
-  max-width: 1000px;
-  margin: 0 auto;
-`;
+import PreviewTemplate from '../templates/PreviewTemplate';
 
 const Preview = () => {
-  return (
-    <UserTemplate>
-      <StyledPreviewWrapper>
-        <PreviewField />
-      </StyledPreviewWrapper>
-    </UserTemplate>
-  );
+  return <PreviewTemplate />;
 };
 
 export default Preview;
