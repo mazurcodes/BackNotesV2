@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ButtonIcon from '../../atoms/ButtonIcon/ButtonIcon';
 import editBigIcon from '../../../assets/icons/icon-big-edit.svg';
@@ -24,14 +25,24 @@ const StyledButtonIcon = styled(ButtonIcon)`
   border: none;
 `;
 
-const ButtonIconPanel = () => {
+const ButtonIconPanel = ({ preview, editor }) => {
   return (
     <StyledButtonIconContainer>
-      <StyledButtonIcon icon={editBigIcon} />
-      <StyledButtonIcon icon={previewBigIcon} />
+      {preview && <StyledButtonIcon icon={editBigIcon} />}
+      {editor && <StyledButtonIcon icon={previewBigIcon} />}
       <StyledButtonIcon icon={closeBigIcon} />
     </StyledButtonIconContainer>
   );
+};
+
+ButtonIconPanel.propTypes = {
+  preview: PropTypes.bool,
+  editor: PropTypes.bool,
+};
+
+ButtonIconPanel.defaultProps = {
+  preview: false,
+  editor: false,
 };
 
 export default ButtonIconPanel;

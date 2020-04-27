@@ -145,7 +145,6 @@ const NotesState = ({ children }) => {
     try {
       const response = await fetch(notesApi(note.id), fetchConfig('PUT', note));
       const noteData = await response.json();
-      console.log(noteData);
       if (!response.ok) throw noteData.error;
       dispatch({
         type: UPDATE_NOTE,

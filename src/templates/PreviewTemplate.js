@@ -16,7 +16,7 @@ const PreviewTemplate = () => {
         <StyledPreviewWrapper>
           <PreviewField />
         </StyledPreviewWrapper>
-        <ButtonIconPanel />
+        <ButtonIconPanel preview />
       </>
     </UserTemplate>
   );

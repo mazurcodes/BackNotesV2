@@ -75,7 +75,6 @@ const EditForm = () => {
             render={(props) => <InputFieldFinalForm label="Description" {...props} />}
           />
           <Spacer height="5px" width="100%" color="#ddd" />
-          {/* TODO: Check if it's possible to pass values from Form to EditorField directly */}
           <Field name="content" component={EditorField} />
         </StyledForm>
       )}

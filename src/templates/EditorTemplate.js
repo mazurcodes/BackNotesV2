@@ -10,7 +10,7 @@ const EditorTemplate = () => {
     <UserTemplate>
       <>
         <EditForm />
-        <ButtonIconPanel />
+        <ButtonIconPanel editor />
       </>
     </UserTemplate>
   );
