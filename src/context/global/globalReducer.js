@@ -1,4 +1,4 @@
-import { SET_PAGE } from '../types';
+import { SET_PAGE, SET_REDIRECT } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -7,7 +7,11 @@ export default (state, action) => {
         ...state,
         currentPage: action.payload,
       };
-
+    case SET_REDIRECT:
+      return {
+        ...state,
+        redirectTo: action.payload,
+      };
     default:
       return state;
   }

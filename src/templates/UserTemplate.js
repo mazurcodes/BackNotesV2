@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import NavBar from '../components/organisms/NavBar/NavBar';
 import EditBar from '../components/organisms/EditBar/EditBar';
 import StatusBar from '../components/organisms/StatusBar/StatusBar';
+import RedirectRoute from '../components/utils/RedirectRoute';
 
 const StyledWrapper = styled.div`
   height: 100vh;
@@ -18,6 +19,7 @@ const UserTemplate = ({ children }) => {
       <EditBar />
       {children}
       <StatusBar />
+      <RedirectRoute />
     </StyledWrapper>
   );
 };

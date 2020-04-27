@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ButtonIcon from '../../atoms/ButtonIcon/ButtonIcon';
 import editBigIcon from '../../../assets/icons/icon-big-edit.svg';
 import previewBigIcon from '../../../assets/icons/icon-big-open.svg';
 import closeBigIcon from '../../../assets/icons/icon-big-close.svg';
+import GlobalContext from '../../../context/global/globalContext';
+import routes from '../../../routes/routes';
 
 const StyledButtonIconContainer = styled.div`
   display: flex;
@@ -26,11 +28,16 @@ const StyledButtonIcon = styled(ButtonIcon)`
 `;
 
 const ButtonIconPanel = ({ preview, editor }) => {
+  const { setDestination } = useContext(GlobalContext);
   return (
     <StyledButtonIconContainer>
-      {preview && <StyledButtonIcon icon={editBigIcon} />}
-      {editor && <StyledButtonIcon icon={previewBigIcon} />}
-      <StyledButtonIcon icon={closeBigIcon} />
+      {preview && (
+        <StyledButtonIcon icon={editBigIcon} onClick={() => setDestination(routes.editor)} />
+      )}
+      {editor && (
+        <StyledButtonIcon icon={previewBigIcon} onClick={() => setDestination(routes.preview)} />
+      )}
+      <StyledButtonIcon icon={closeBigIcon} onClick={() => setDestination(routes.notes)} />
     </StyledButtonIconContainer>
   );
 };

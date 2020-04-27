@@ -10,6 +10,7 @@ import editIcon from '../../../assets/icons/icon-edit.svg';
 import deleteIcon from '../../../assets/icons/icon-delete.svg';
 import notesContext from '../../../context/notes/notesContext';
 import routes from '../../../routes/routes';
+import globalContext from '../../../context/global/globalContext';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -85,17 +86,18 @@ const StyledDivider = styled.div`
   margin: 0 10px;
 `;
 
-const Card = ({ note: { id, title, desc }, openIn }) => {
+const Card = ({ note: { id, title, desc } }) => {
   const { deleteNote, setCurrent } = useContext(notesContext);
+  const { setDestination } = useContext(globalContext);
 
-  const onOpen = () => {
+  const onPreview = () => {
     setCurrent(id);
-    openIn({ redirect: true, route: routes.preview });
+    setDestination(routes.preview);
   };
 
   const onEdit = () => {
     setCurrent(id);
-    openIn({ redirect: true, route: routes.editor });
+    setDestination(routes.editor);
   };
 
   const onDelete = () => {
@@ -114,7 +116,7 @@ const Card = ({ note: { id, title, desc }, openIn }) => {
         <StyledDescription>{desc}</StyledDescription>
       </StyledDescriptionWrapper>
       <StyledActionsWrapper>
-        <StyledButtonIcon icon={openIcon} onClick={onOpen} />
+        <StyledButtonIcon icon={openIcon} onClick={onPreview} />
         <StyledButtonIcon icon={editIcon} onClick={onEdit} />
         <StyledDivider />
         <StyledButtonIcon icon={deleteIcon} onClick={onDelete} />
@@ -129,7 +131,6 @@ Card.propTypes = {
     title: PropTypes.string,
     desc: PropTypes.string,
   }).isRequired,
-  openIn: PropTypes.func.isRequired,
 };
 
 export default Card;

@@ -16,10 +16,7 @@ const StyledForm = styled.form`
 const EditForm = () => {
   const { initialCurrentValues, updateCurrent } = useContext(notesContext);
 
-  const onSubmit = (values) => {
-    // TODO: After closing editor with button submit
-    console.log(values);
-  };
+  const onSubmit = () => {};
 
   const validate = (values) => {
     const errors = {};
