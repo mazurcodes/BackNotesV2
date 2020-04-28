@@ -1,9 +1,9 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ContextDevTool from 'react-context-devtool';
 import GlobalContext from './globalContext';
 import globalReducer from './globalReducer';
-import { SET_PAGE, SET_REDIRECT } from '../types';
+import { SET_PAGE, SET_REDIRECT, RESET_REDIRECT } from '../types';
 
 const GlobalState = ({ children }) => {
   const initialState = {
@@ -26,6 +26,15 @@ const GlobalState = ({ children }) => {
       payload: route,
     });
   };
+
+  const resetDestination = () => {
+    dispatch({ type: RESET_REDIRECT });
+  };
+
+  useEffect(() => {
+    if (!state.redirectTo) return;
+    resetDestination();
+  }, [state.redirectTo]);
 
   return (
     <GlobalContext.Provider

@@ -24,8 +24,8 @@ const Root = () => {
                 <Route exact path={routes.login} component={Login} />
                 <Route exact path={routes.register} component={Register} />
                 <PrivateRoute exact path={routes.notes} component={Notes} />
-                <Route exact path={routes.preview} component={Preview} />
-                <Route exact path={routes.editor} component={Editor} />
+                <PrivateRoute exact path={routes.preview} component={Preview} />
+                <PrivateRoute exact path={routes.editor} component={Editor} />
               </Switch>
             </MainTemplate>
           </BrowserRouter>

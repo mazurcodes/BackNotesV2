@@ -1,6 +1,7 @@
 // Global Context
 export const SET_PAGE = 'SET_PAGE';
 export const SET_REDIRECT = 'SET_REDIRECT';
+export const RESET_REDIRECT = 'RESET_REDIRECT';
 
 // Alert Context
 export const SET_ALERT = 'SET_ALERT';

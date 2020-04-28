@@ -89,15 +89,15 @@ const NewItemPanel = (props) => {
     const note = {
       title: values.title,
       desc: values.desc.replace(/(\r\n|\n|\r)/gm, ' '),
-      content: '# Write your notes here :) \n ## Hellow',
+      content: '# This is a sample note \n ## Hellow',
     };
 
     addNote(note);
     panelToggle();
-    await sleep(100);
+    await sleep(10);
   };
 
-  const openEditor = () => setTimeout(() => setRedirect(true), 10);
+  const redirectToEditor = (isValid) => isValid && setTimeout(() => setRedirect(true), 50);
 
   if (redirect) return <Redirect push to={routes.editor} />;
 
@@ -106,6 +106,7 @@ const NewItemPanel = (props) => {
       <Form
         onSubmit={onSubmit}
         validate={(values) => {
+          console.log(values);
           const errors = {};
 
           if (!values.title) {
@@ -119,63 +120,74 @@ const NewItemPanel = (props) => {
             errors.desc = 'Description is required';
           }
           if (values.desc && values.desc.length > 60) {
-            errors.desc = 'Max lenght of the description is 24 characters';
+            errors.desc = 'Max lenght of the description is 60 characters';
           }
           return errors;
         }}
-        render={({ handleSubmit, form, submitting, pristine, valid }) => (
-          <StyledForm
-            onSubmit={async (event) => {
-              await handleSubmit(event);
-              valid && form.reset();
-            }}
-          >
-            <StyledFormHeading>Add New File</StyledFormHeading>
-            <Field
-              name="title"
-              render={({ input, meta }) => (
-                <StyledFieldWrapper>
-                  <StyledLabel htmlFor="titleInput">Note title:</StyledLabel>
-                  <StyledInput
-                    type="text"
-                    id="titleInput"
-                    value={input.value}
-                    onChange={input.onChange}
-                    placeholder="max. 24"
-                    maxLength="25"
-                    error={meta.error && meta.touched}
-                  />
-                  {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
-                </StyledFieldWrapper>
-              )}
-            />
-            <Field
-              name="desc"
-              render={({ input, meta }) => (
-                <StyledFieldWrapper>
-                  <StyledLabel htmlFor="DescTextArea">Description:</StyledLabel>
-                  <StyledTextArea
-                    as="textarea"
-                    type="text"
-                    id="DescTextArea"
-                    value={input.value}
-                    onChange={input.onChange}
-                    placeholder="max. 60"
-                    maxLength="60"
-                    error={meta.error && meta.touched}
-                  />
-                  {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
-                </StyledFieldWrapper>
-              )}
-            />
-            <StyledButtonOpen type="submit" disabled={submitting || pristine} onClick={openEditor}>
-              Create and open in editor
-            </StyledButtonOpen>
-            <StyledButtonSave type="submit" disabled={submitting || pristine}>
-              Just save, edit later
-            </StyledButtonSave>
-          </StyledForm>
-        )}
+        render={(propsies) => {
+          console.log(propsies);
+          const { handleSubmit, form, submitting, pristine, valid } = propsies;
+          // console.log(valid);
+          return (
+            <StyledForm
+              onSubmit={async (event) => {
+                console.log(event);
+                await handleSubmit(event);
+                valid && form.resetFieldState('title');
+                valid && form.resetFieldState('desc');
+                valid && form.reset();
+              }}
+            >
+              <StyledFormHeading>Add New File</StyledFormHeading>
+              <Field
+                name="title"
+                render={({ input, meta }) => (
+                  <StyledFieldWrapper>
+                    <StyledLabel htmlFor="titleInput">Note title:</StyledLabel>
+                    <StyledInput
+                      type="text"
+                      id="titleInput"
+                      value={input.value}
+                      onChange={input.onChange}
+                      placeholder="max. 24"
+                      error={meta.error && meta.modified}
+                    />
+
+                    {meta.error && meta.modified && <StyledError>{meta.error}</StyledError>}
+                  </StyledFieldWrapper>
+                )}
+              />
+              <Field
+                name="desc"
+                render={({ input, meta }) => (
+                  <StyledFieldWrapper>
+                    <StyledLabel htmlFor="DescTextArea">Description:</StyledLabel>
+                    <StyledTextArea
+                      as="textarea"
+                      type="text"
+                      id="DescTextArea"
+                      value={input.value}
+                      onChange={input.onChange}
+                      placeholder="max. 60"
+                      error={meta.error && meta.modified}
+                    />
+                    {meta.error && meta.modified && <StyledError>{meta.error}</StyledError>}
+                  </StyledFieldWrapper>
+                )}
+              />
+              <StyledButtonOpen
+                type="submit"
+                disabled={submitting || pristine}
+                onClick={() => redirectToEditor(valid)}
+              >
+                Create and open in editor
+              </StyledButtonOpen>
+              <StyledButtonSave type="submit" disabled={submitting || pristine}>
+                Just save, edit later
+              </StyledButtonSave>
+            </StyledForm>
+          );
+        }}
       />
     </StyledWrapper>
   );

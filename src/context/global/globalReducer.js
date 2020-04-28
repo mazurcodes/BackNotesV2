@@ -1,4 +1,4 @@
-import { SET_PAGE, SET_REDIRECT } from '../types';
+import { SET_PAGE, SET_REDIRECT, RESET_REDIRECT } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -11,6 +11,11 @@ export default (state, action) => {
       return {
         ...state,
         redirectTo: action.payload,
+      };
+    case RESET_REDIRECT:
+      return {
+        ...state,
+        redirectTo: '',
       };
     default:
       return state;
