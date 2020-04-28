@@ -8,6 +8,10 @@ const Button = styled.button`
   background-color: ${({ theme }) => theme.notes};
   text-align: center;
   color: white;
+
+  :disabled {
+    filter: blur(5px);
+  }
 `;
 
 export default Button;

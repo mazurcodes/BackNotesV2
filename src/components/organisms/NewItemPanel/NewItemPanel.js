@@ -1,12 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Redirect } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
-import Input from '../../atoms/Input/Input';
 import Button from '../../atoms/Button/Button';
 import notesContext from '../../../context/notes/notesContext';
 import routes from '../../../routes/routes';
+import GlobalContext from '../../../context/global/globalContext';
+import InputNewItemForm from '../../molecules/InputNewItemForm/InputNewItemForm';
+import TextAreaNewItemForm from '../../molecules/InputNewItemForm/TextAreaNewItemForm';
 
 const StyledWrapper = styled.div`
   width: 600px;
@@ -38,34 +39,6 @@ const StyledFormHeading = styled.h2`
   margin: 40px 0;
 `;
 
-const StyledFieldWrapper = styled.div`
-  margin-bottom: 40px;
-`;
-
-const StyledLabel = styled.label`
-  display: block;
-  margin: 5px 20px;
-  font-size: ${({ theme }) => theme.fontSize.xs};
-`;
-
-const StyledInput = styled(Input)`
-  text-align: left;
-  padding: 15px 20px;
-  background-color: ${({ error }) => error && 'rgba(255, 0, 0, 0.2)'};
-`;
-
-const StyledError = styled.p`
-  text-align: center;
-  text-decoration: underline;
-  text-decoration-color: red;
-`;
-
-const StyledTextArea = styled(StyledInput)`
-  height: 200px;
-  border-radius: 30px;
-  resize: none;
-`;
-
 const StyledButtonOpen = styled(Button)`
   background-color: #5fd417;
   margin-bottom: 20px;
@@ -80,16 +53,15 @@ const StyledButtonSave = styled(Button)`
 const NewItemPanel = (props) => {
   const { isActive, panelToggle } = props;
 
-  const [redirect, setRedirect] = useState(false);
-
   const { addNote } = useContext(notesContext);
+  const { setDestination } = useContext(GlobalContext);
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const onSubmit = async (values) => {
     const note = {
       title: values.title,
       desc: values.desc.replace(/(\r\n|\n|\r)/gm, ' '),
-      content: '# This is a sample note \n ## Hellow',
+      content: '# This is a sample note \n ## Hello',
     };
 
     addNote(note);
@@ -97,16 +69,14 @@ const NewItemPanel = (props) => {
     await sleep(10);
   };
 
-  const redirectToEditor = (isValid) => isValid && setTimeout(() => setRedirect(true), 50);
-
-  if (redirect) return <Redirect push to={routes.editor} />;
+  const redirectToEditor = (isValid) =>
+    isValid && setTimeout(() => setDestination(routes.editor), 50);
 
   return (
     <StyledWrapper active={isActive}>
       <Form
         onSubmit={onSubmit}
         validate={(values) => {
-          console.log(values);
           const errors = {};
 
           if (!values.title) {
@@ -124,70 +94,40 @@ const NewItemPanel = (props) => {
           }
           return errors;
         }}
-        render={(propsies) => {
-          console.log(propsies);
-          const { handleSubmit, form, submitting, pristine, valid } = propsies;
-          // console.log(valid);
-          return (
-            <StyledForm
-              onSubmit={async (event) => {
-                console.log(event);
-                await handleSubmit(event);
-                valid && form.resetFieldState('title');
-                valid && form.resetFieldState('desc');
-                valid && form.reset();
-              }}
+        render={({ handleSubmit, form: { resetFieldState, reset }, submitting, valid }) => (
+          <StyledForm
+            onSubmit={async (event) => {
+              await handleSubmit(event);
+              valid && resetFieldState('title');
+              valid && resetFieldState('desc');
+              valid && reset();
+            }}
+          >
+            <StyledFormHeading>Add New File</StyledFormHeading>
+            <Field
+              name="title"
+              render={({ input, meta }) => (
+                <InputNewItemForm label="Note title" input={input} meta={meta} />
+              )}
+            />
+            <Field
+              name="desc"
+              render={({ input, meta }) => (
+                <TextAreaNewItemForm label="Description" input={input} meta={meta} />
+              )}
+            />
+            <StyledButtonOpen
+              type="submit"
+              disabled={submitting || !valid}
+              onClick={() => redirectToEditor(valid)}
             >
-              <StyledFormHeading>Add New File</StyledFormHeading>
-              <Field
-                name="title"
-                render={({ input, meta }) => (
-                  <StyledFieldWrapper>
-                    <StyledLabel htmlFor="titleInput">Note title:</StyledLabel>
-                    <StyledInput
-                      type="text"
-                      id="titleInput"
-                      value={input.value}
-                      onChange={input.onChange}
-                      placeholder="max. 24"
-                      error={meta.error && meta.modified}
-                    />
-
-                    {meta.error && meta.modified && <StyledError>{meta.error}</StyledError>}
-                  </StyledFieldWrapper>
-                )}
-              />
-              <Field
-                name="desc"
-                render={({ input, meta }) => (
-                  <StyledFieldWrapper>
-                    <StyledLabel htmlFor="DescTextArea">Description:</StyledLabel>
-                    <StyledTextArea
-                      as="textarea"
-                      type="text"
-                      id="DescTextArea"
-                      value={input.value}
-                      onChange={input.onChange}
-                      placeholder="max. 60"
-                      error={meta.error && meta.modified}
-                    />
-                    {meta.error && meta.modified && <StyledError>{meta.error}</StyledError>}
-                  </StyledFieldWrapper>
-                )}
-              />
-              <StyledButtonOpen
-                type="submit"
-                disabled={submitting || pristine}
-                onClick={() => redirectToEditor(valid)}
-              >
-                Create and open in editor
-              </StyledButtonOpen>
-              <StyledButtonSave type="submit" disabled={submitting || pristine}>
-                Just save, edit later
-              </StyledButtonSave>
-            </StyledForm>
-          );
-        }}
+              Create and open in editor
+            </StyledButtonOpen>
+            <StyledButtonSave type="submit" disabled={submitting || !valid}>
+              Just save, edit later
+            </StyledButtonSave>
+          </StyledForm>
+        )}
       />
     </StyledWrapper>
   );

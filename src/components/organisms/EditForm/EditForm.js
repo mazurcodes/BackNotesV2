@@ -3,7 +3,7 @@ import { Form, Field, FormSpy } from 'react-final-form';
 import styled from 'styled-components';
 import notesContext from '../../../context/notes/notesContext';
 import Spacer from '../../atoms/Spacer/Spacer';
-import InputFieldFinalForm from '../../molecules/InputFinalForm/InputFinalForm';
+import InputFieldFinalForm from '../../molecules/InputEditorForm/InputEditorForm';
 import EditorField from '../EditorField/EditorField';
 
 const StyledForm = styled.form`
@@ -37,9 +37,7 @@ const EditForm = () => {
     return errors;
   };
 
-  const onChange = (change) => {
-    const { modified, values, errors } = change;
-
+  const onChange = ({ modified, values, errors }) => {
     const noteFields = { ...values };
 
     // content can be empty but then it will get into trouble with
@@ -65,11 +63,15 @@ const EditForm = () => {
           />
           <Field
             name="title"
-            render={(props) => <InputFieldFinalForm label="Title" {...props} />}
+            render={({ input, meta }) => (
+              <InputFieldFinalForm label="Title" input={input} meta={meta} />
+            )}
           />
           <Field
             name="desc"
-            render={(props) => <InputFieldFinalForm label="Description" {...props} />}
+            render={({ input, meta }) => (
+              <InputFieldFinalForm label="Description" input={input} meta={meta} />
+            )}
           />
           <Spacer height="5px" width="100%" color="#ddd" />
           <Field name="content" component={EditorField} />
