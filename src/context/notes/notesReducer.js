@@ -12,6 +12,8 @@ import {
   RENDER_CONTENT,
   UPDATE_CURRENT,
   SET_TIMEOUT,
+  SET_MARKDOWN_STATS,
+  SET_HTML_STATS,
 } from '../types';
 
 export default (state, action) => {
@@ -52,6 +54,16 @@ export default (state, action) => {
           ...state.current,
           ...action.payload,
         },
+      };
+    case SET_MARKDOWN_STATS:
+      return {
+        ...state,
+        markdownStats: action.payload,
+      };
+    case SET_HTML_STATS:
+      return {
+        ...state,
+        htmlStats: action.payload,
       };
     case SET_TIMEOUT:
       return {

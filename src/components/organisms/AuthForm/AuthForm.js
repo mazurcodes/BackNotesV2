@@ -62,7 +62,7 @@ const AuthForm = ({ onRedirect }) => {
   const { currentPage } = useContext(GlobalContext);
   const formType = currentPage === '/login' ? 'Login' : 'Register';
 
-  const { register, login } = useContext(AuthContext);
+  const { register, login, error } = useContext(AuthContext);
 
   const onSubmit = (values) => {
     currentPage === '/login' ? login(values) : register(values);
@@ -135,6 +135,7 @@ const AuthForm = ({ onRedirect }) => {
                     error={meta.error && meta.touched}
                   />
                   {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
+                  {error === 'Invalid email' && <StyledError>{error}</StyledError>}
                 </>
               )}
             />
@@ -151,6 +152,7 @@ const AuthForm = ({ onRedirect }) => {
                     error={meta.error && meta.touched}
                   />
                   {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
+                  {error === 'Invalid password' && <StyledError>{error}</StyledError>}
                 </>
               )}
             />

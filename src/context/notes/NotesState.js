@@ -20,6 +20,7 @@ import {
   RENDER_CONTENT,
 } from '../types';
 import { notesApi, fetchConfig } from '../api';
+import { updateMarkdownStats as upMdStats, updateHTMLStats as upHTMLStats } from './helpers';
 
 const NotesState = ({ children }) => {
   const initialState = {
@@ -30,6 +31,8 @@ const NotesState = ({ children }) => {
     renderedContent: null,
     timeoutIndex: 0,
     error: '',
+    markdownStats: null,
+    htmlStats: null,
   };
 
   const [state, dispatch] = useReducer(notesReducer, initialState);
@@ -193,11 +196,9 @@ const NotesState = ({ children }) => {
    *
    * Example:
    *
-   *      updateCurrent(note);
+   *      updateCurrent(noteFields);
    *      updateCurrent({
-   *        id: '5dfgdf4354353dgfsdfs',
    *        title: 'hello',
-   *        desc: 'yo',
    *        content: 'hey'
    *      })
    *
@@ -225,6 +226,32 @@ const NotesState = ({ children }) => {
       payload: renderedContent,
     });
   };
+
+  /**
+   * Context action for updating markdown stats.
+   *
+   * Example:
+   *
+   *      updateMarkdownStatsAction(content);
+   *
+   */
+  const updateMarkdownStats = (content) => {
+    const result = upMdStats(content);
+    dispatch(result);
+  };
+  /**
+   * Context action for updating markdown stats.
+   *
+   * Example:
+   *
+   *      updateHTMLStats(htmlNode);
+   *
+   */
+  const updateHTMLStats = (htmlNode) => {
+    const result = upHTMLStats(htmlNode);
+    dispatch(result);
+  };
+
   /**
    * Context action for clearing current note in state.
    *
@@ -300,6 +327,14 @@ const NotesState = ({ children }) => {
     // eslint-disable-next-line
   }, [state.current]);
 
+  /**
+   * Helper function for autoupdate markdown stats
+   */
+  useEffect(() => {
+    if (!state.current) return;
+    updateMarkdownStats(state.current.content);
+  }, [state.current]);
+
   return (
     <NotesContext.Provider
       value={{
@@ -310,6 +345,8 @@ const NotesState = ({ children }) => {
         initialCurrentValues: state.initialCurrentValues,
         renderedContent: state.renderedContent,
         error: state.error,
+        markdownStats: state.markdownStats,
+        htmlStats: state.htmlStats,
         getNotes,
         addNote,
         deleteNote,
@@ -320,6 +357,7 @@ const NotesState = ({ children }) => {
         filterNotes,
         clearFilter,
         clearNotesState,
+        updateHTMLStats,
       }}
     >
       <ContextDevTool context={NotesContext} id="notesContext" displayName="Notes Context" />
