@@ -30,6 +30,7 @@ export const CLEAR_STATE = 'CLEAR_STATE';
 export const NOTES_ERROR = 'NOTES_ERROR';
 export const RENDER_CONTENT = 'RENDER_CONTENT';
 export const SET_TIMEOUT = 'SET_TIMEOUT';
+export const SET_DEBOUCE = 'SET_DEBOUCE';
 export const SET_MARKDOWN_STATS = 'SET_MARKDOWN_STATS';
 export const SET_HTML_STATS = 'SET_HTML_STATS';
 

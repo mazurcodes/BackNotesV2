@@ -11,7 +11,6 @@ import {
   NOTES_ERROR,
   RENDER_CONTENT,
   UPDATE_CURRENT,
-  SET_TIMEOUT,
   SET_MARKDOWN_STATS,
   SET_HTML_STATS,
 } from '../types';
@@ -64,11 +63,6 @@ export default (state, action) => {
       return {
         ...state,
         htmlStats: action.payload,
-      };
-    case SET_TIMEOUT:
-      return {
-        ...state,
-        timeoutIndex: action.payload,
       };
     case RENDER_CONTENT:
       return {

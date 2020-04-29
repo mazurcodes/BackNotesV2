@@ -5,7 +5,6 @@ import mdIt from '../markdownIt';
 import NotesContext from './notesContext';
 import notesReducer from './notesReducer';
 import {
-  SET_TIMEOUT,
   CLEAR_CURRENT,
   FILTER_NOTES,
   CLEAR_FILTER,
@@ -29,7 +28,7 @@ const NotesState = ({ children }) => {
     current: null,
     initialCurrentValues: null,
     renderedContent: null,
-    timeoutIndex: 0,
+    debounceIndex: 0,
     error: '',
     markdownStats: null,
     htmlStats: null,
@@ -204,7 +203,6 @@ const NotesState = ({ children }) => {
    *
    */
   const updateCurrent = (noteFields) => dispatch({ type: UPDATE_CURRENT, payload: noteFields });
-
   /**
    * Context action for updating current note in state.
    *
@@ -220,6 +218,8 @@ const NotesState = ({ children }) => {
    *
    */
   const renderContent = (content) => {
+    if (!content) return;
+    console.log(content);
     const renderedContent = mdIt.render(content);
     dispatch({
       type: RENDER_CONTENT,
@@ -307,8 +307,14 @@ const NotesState = ({ children }) => {
    *
    */
   useEffect(() => {
-    if (!state.current) return;
-    renderContent(state.current.content);
+    let timeIndex;
+    if (state.current) {
+      const autoRenderTime = 200;
+      timeIndex = setTimeout(() => renderContent(state.current.content), autoRenderTime);
+    }
+    return () => {
+      clearTimeout(timeIndex);
+    };
     // eslint-disable-next-line
   }, [state.current]);
 
@@ -316,14 +322,14 @@ const NotesState = ({ children }) => {
    * Helper function for timeout autosaving
    */
   useEffect(() => {
-    if (!state.current) return;
-    const autosaveTime = 3000;
-    clearTimeout(state.timeoutIndex);
-    const timeIndex = setTimeout(() => updateNote(state.current), autosaveTime);
-    dispatch({
-      type: SET_TIMEOUT,
-      payload: timeIndex,
-    });
+    let timeIndex;
+    if (state.current) {
+      const autosaveTime = 3000;
+      timeIndex = setTimeout(() => updateNote(state.current), autosaveTime);
+    }
+    return () => {
+      clearTimeout(timeIndex);
+    };
     // eslint-disable-next-line
   }, [state.current]);
 
@@ -333,6 +339,7 @@ const NotesState = ({ children }) => {
   useEffect(() => {
     if (!state.current) return;
     updateMarkdownStats(state.current.content);
+    // eslint-disable-next-line
   }, [state.current]);
 
   return (
@@ -358,6 +365,7 @@ const NotesState = ({ children }) => {
         clearFilter,
         clearNotesState,
         updateHTMLStats,
+        renderContent,
       }}
     >
       <ContextDevTool context={NotesContext} id="notesContext" displayName="Notes Context" />
