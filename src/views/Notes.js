@@ -5,11 +5,12 @@ import AuthContext from '../context/auth/authContext';
 import Card from '../components/molecules/Card/Card';
 
 const Notes = () => {
-  const { notes, getNotes } = useContext(notesContext);
+  const { notes, getNotes, clearCurrent } = useContext(notesContext);
   const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     isAuthenticated && getNotes();
+    clearCurrent();
     // eslint-disable-next-line
   }, []);
 

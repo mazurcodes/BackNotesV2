@@ -17,9 +17,11 @@ const wordStats = (content) => {
 };
 
 const letterStats = (content) => {
-  const lines = content.split('\n');
-  const chraWithOutEnters = lines.filter((word) => word !== '\n' && word.length > 0);
-  const charString = chraWithOutEnters.join();
+  const lines = content.split('');
+  const charsWithOutEntersAndSpaces = lines.filter(
+    (word) => word !== '\n' && word.trim().length > 0,
+  );
+  const charString = charsWithOutEntersAndSpaces.join();
   return charString.length;
 };
 

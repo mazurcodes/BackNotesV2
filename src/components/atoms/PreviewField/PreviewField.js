@@ -14,6 +14,7 @@ const PreviewField = () => {
       renderedHtml.current.innerHTML = renderedContent;
       updateHTMLStats(renderedHtml.current);
     }
+    // eslint-disable-next-line
   }, [renderedContent]);
   return <div className="markdown-body" ref={renderedHtml} />;
 };

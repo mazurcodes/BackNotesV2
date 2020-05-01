@@ -29,9 +29,10 @@ const NotesState = ({ children }) => {
     initialCurrentValues: null,
     renderedContent: null,
     debounceIndex: 0,
-    error: '',
     markdownStats: null,
     htmlStats: null,
+    saveStatus: '',
+    error: '',
   };
 
   const [state, dispatch] = useReducer(notesReducer, initialState);
@@ -219,7 +220,6 @@ const NotesState = ({ children }) => {
    */
   const renderContent = (content) => {
     if (!content) return;
-    console.log(content);
     const renderedContent = mdIt.render(content);
     dispatch({
       type: RENDER_CONTENT,
@@ -291,7 +291,7 @@ const NotesState = ({ children }) => {
    *      clearNotesState()
    *
    */
-  const clearNotesState = () => dispatch({ type: CLEAR_STATE });
+  const clearNotesState = () => dispatch({ type: CLEAR_STATE, payload: initialState });
 
   /**
    *****************************************************************************************
@@ -354,6 +354,7 @@ const NotesState = ({ children }) => {
         error: state.error,
         markdownStats: state.markdownStats,
         htmlStats: state.htmlStats,
+        saveStatus: state.saveStatus,
         getNotes,
         addNote,
         deleteNote,
@@ -365,7 +366,6 @@ const NotesState = ({ children }) => {
         clearFilter,
         clearNotesState,
         updateHTMLStats,
-        renderContent,
       }}
     >
       <ContextDevTool context={NotesContext} id="notesContext" displayName="Notes Context" />

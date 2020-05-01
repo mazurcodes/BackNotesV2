@@ -9,8 +9,15 @@ const Button = styled.button`
   text-align: center;
   color: white;
 
+  :hover {
+    cursor: pointer;
+  }
+
   :disabled {
-    filter: blur(5px);
+    filter: grayscale(50%);
+    :hover {
+      cursor: not-allowed;
+    }
   }
 `;
 

@@ -62,6 +62,7 @@ const NewItemPanel = (props) => {
       title: values.title,
       desc: values.desc.replace(/(\r\n|\n|\r)/gm, ' '),
       content: '# This is a sample note \n ## Hello',
+      date: Date.now(),
     };
 
     addNote(note);

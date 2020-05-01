@@ -38,6 +38,7 @@ export default (state, action) => {
       return {
         ...state,
         notes: state.notes.map((note) => (note.id === action.payload.id ? action.payload : note)),
+        saveStatus: 'Saved',
       };
 
     case SET_CURRENT:
@@ -53,6 +54,7 @@ export default (state, action) => {
           ...state.current,
           ...action.payload,
         },
+        saveStatus: 'Saving...',
       };
     case SET_MARKDOWN_STATS:
       return {
@@ -88,23 +90,16 @@ export default (state, action) => {
         ...state,
         filtered: [],
       };
+    // TODO: Update clear state action
     case CLEAR_STATE:
       return {
-        ...state,
-        notes: [],
-        filtered: [],
-        current: null,
-        renderedContent: null,
-        error: '',
+        ...action.payload,
       };
     case NOTES_ERROR:
       return {
         ...state,
         error: action.payload,
       };
-    case 'DEMO':
-      console.log(action.payload);
-      return state;
     default:
       return state;
   }

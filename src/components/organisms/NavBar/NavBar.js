@@ -38,7 +38,7 @@ const StyledButtonIcon = styled(ButtonIcon)`
   }
 `;
 
-const NavBar = () => {
+const NavBar = React.memo(() => {
   const { user, logout } = useContext(AuthContext);
   const { clearNotesState } = useContext(NotesContext);
   const onLogout = () => {
@@ -54,6 +54,6 @@ const NavBar = () => {
       </StyledUserWrapper>
     </StyledWrapper>
   );
-};
+});
 
 export default NavBar;
