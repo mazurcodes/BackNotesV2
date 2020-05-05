@@ -33,19 +33,21 @@ const ButtonIconPanel = ({ preview, editor }) => {
   const { setInitialCurrent } = useContext(NotesContext);
 
   const handleRedirect = (route) => {
-    setInitialCurrent();
-    setDestination(route);
+    return () => {
+      setInitialCurrent();
+      setDestination(route);
+    };
   };
 
   return (
     <StyledButtonIconContainer>
-      {preview && (
-        <StyledButtonIcon icon={editBigIcon} onClick={() => handleRedirect(routes.editor)} />
-      )}
+      {preview && <StyledButtonIcon icon={editBigIcon} onClick={handleRedirect(routes.editor)} />}
+
       {editor && (
-        <StyledButtonIcon icon={previewBigIcon} onClick={() => handleRedirect(routes.preview)} />
+        <StyledButtonIcon icon={previewBigIcon} onClick={handleRedirect(routes.preview)} />
       )}
-      <StyledButtonIcon icon={closeBigIcon} onClick={() => handleRedirect(routes.notes)} />
+
+      <StyledButtonIcon icon={closeBigIcon} onClick={handleRedirect(routes.notes)} />
     </StyledButtonIconContainer>
   );
 };
