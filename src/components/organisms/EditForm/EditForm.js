@@ -37,12 +37,10 @@ const EditForm = () => {
     return errors;
   };
 
-  const onChange = (vls) => {
-    console.log(vls);
-    const { values, modified, errors, active } = vls;
+  const onChange = ({ values, modified, errors, active }) => {
     const noteFields = { ...values };
     // content can be empty but then it will get into trouble with
-    // updating current state. It's better to send smthg line \n
+    // updating current state. It's better to send smthg like \n
     if (modified.content) noteFields.content = values.content || '\n';
 
     const isError = Object.keys(errors).length < 1;
