@@ -13,6 +13,7 @@ import {
   UPDATE_CURRENT,
   SET_MARKDOWN_STATS,
   SET_HTML_STATS,
+  SET_INITIAL_CURRENT,
 } from '../types';
 
 export default (state, action) => {
@@ -55,6 +56,11 @@ export default (state, action) => {
           ...action.payload,
         },
         saveStatus: 'Saving...',
+      };
+    case SET_INITIAL_CURRENT:
+      return {
+        ...state,
+        initialCurrentValues: state.current,
       };
     case SET_MARKDOWN_STATS:
       return {

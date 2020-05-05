@@ -15,6 +15,7 @@ import {
   DELETE_NOTE,
   UPDATE_NOTE,
   SET_CURRENT,
+  SET_INITIAL_CURRENT,
   UPDATE_CURRENT,
   RENDER_CONTENT,
 } from '../types';
@@ -191,6 +192,8 @@ const NotesState = ({ children }) => {
     }
   };
 
+  const setInitialCurrent = () => dispatch({ type: SET_INITIAL_CURRENT });
+
   /**
    * Context action for updating current note in state.
    *
@@ -308,7 +311,8 @@ const NotesState = ({ children }) => {
    */
   useEffect(() => {
     let timeIndex;
-    if (state.current) {
+    // console.log(state.current['content']);
+    if (state.current && state.current.content) {
       const autoRenderTime = 200;
       timeIndex = setTimeout(() => renderContent(state.current.content), autoRenderTime);
     }
@@ -366,6 +370,7 @@ const NotesState = ({ children }) => {
         clearFilter,
         clearNotesState,
         updateHTMLStats,
+        setInitialCurrent,
       }}
     >
       <ContextDevTool context={NotesContext} id="notesContext" displayName="Notes Context" />

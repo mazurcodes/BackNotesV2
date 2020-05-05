@@ -22,6 +22,7 @@ export const ADD_NOTE = 'ADD_NOTE';
 export const DELETE_NOTE = 'DELETE_NOTE';
 export const UPDATE_NOTE = 'UPDATE_NOTE';
 export const SET_CURRENT = 'SET_CURRENT';
+export const SET_INITIAL_CURRENT = 'SET_INITIAL_CURRENT';
 export const UPDATE_CURRENT = 'UPDATE_CURRENT';
 export const CLEAR_CURRENT = 'CLEAR_CURRENT';
 export const FILTER_NOTES = 'FILTER_NOTES';

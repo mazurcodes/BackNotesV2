@@ -7,6 +7,7 @@ import previewBigIcon from '../../../assets/icons/icon-big-open.svg';
 import closeBigIcon from '../../../assets/icons/icon-big-close.svg';
 import GlobalContext from '../../../context/global/globalContext';
 import routes from '../../../routes/routes';
+import NotesContext from '../../../context/notes/notesContext';
 
 const StyledButtonIconContainer = styled.div`
   display: flex;
@@ -29,15 +30,22 @@ const StyledButtonIcon = styled(ButtonIcon)`
 
 const ButtonIconPanel = ({ preview, editor }) => {
   const { setDestination } = useContext(GlobalContext);
+  const { setInitialCurrent } = useContext(NotesContext);
+
+  const handleRedirect = (route) => {
+    setInitialCurrent();
+    setDestination(route);
+  };
+
   return (
     <StyledButtonIconContainer>
       {preview && (
-        <StyledButtonIcon icon={editBigIcon} onClick={() => setDestination(routes.editor)} />
+        <StyledButtonIcon icon={editBigIcon} onClick={() => handleRedirect(routes.editor)} />
       )}
       {editor && (
-        <StyledButtonIcon icon={previewBigIcon} onClick={() => setDestination(routes.preview)} />
+        <StyledButtonIcon icon={previewBigIcon} onClick={() => handleRedirect(routes.preview)} />
       )}
-      <StyledButtonIcon icon={closeBigIcon} onClick={() => setDestination(routes.notes)} />
+      <StyledButtonIcon icon={closeBigIcon} onClick={() => handleRedirect(routes.notes)} />
     </StyledButtonIconContainer>
   );
 };

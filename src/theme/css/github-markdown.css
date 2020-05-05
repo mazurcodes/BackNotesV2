@@ -61,6 +61,8 @@
   line-height: 1.5;
   word-wrap: break-word;
   padding: 50px 60px;
+  word-wrap: break-word;
+  word-break: break-all;
   flex: 1;
 }
 
