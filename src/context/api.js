@@ -1,11 +1,11 @@
 // Notes API path
-export const NOTES_API = 'http://localhost:5000/markdown';
+export const NOTES_API = 'https://backnotes-v2-backend.herokuapp.com/markdown';
 
 // Authorization API path
-export const AUTH_API = 'http://localhost:5000/auth';
+export const AUTH_API = 'https://backnotes-v2-backend.herokuapp.com/auth';
 
 // Registration API path
-export const REG_API = 'http://localhost:5000/users';
+export const REG_API = 'https://backnotes-v2-backend.herokuapp.com/users';
 
 /**
  * Configures Notes API path.
