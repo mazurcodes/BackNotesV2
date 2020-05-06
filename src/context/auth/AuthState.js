@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ContextDevTool from 'react-context-devtool';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
-import { AUTH_API, REG_API } from '../api';
+import { AUTH_API, REG_API, fetchConfig } from '../api';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -23,39 +23,28 @@ const AuthState = ({ children }) => {
     loading: true,
     error: null,
   };
+
   const [state, dispatch] = useReducer(authReducer, initialState);
-
-  const signFetchConfig = (user) => {
-    return {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    };
-  };
-
-  const authFetchConfig = (token) => {
-    return {
-      method: 'GET',
-      headers: {
-        'x-auth-token': token,
-      },
-    };
-  };
 
   const setLoading = () => dispatch({ type: LOADING });
 
+  /**
+   * Auth context action for registering new user.
+   *
+   * Example:
+   *
+   *      register(user)
+   *      register({name: 'John', email: 'rambo@gmail.com', password: 'hey123'})
+   *
+   */
   const register = async (user) => {
+    console.log(fetchConfig('POST', user));
     setLoading();
     try {
-      const res = await fetch(REG_API, signFetchConfig(user));
+      const res = await fetch(REG_API, fetchConfig('POST', user));
       const data = await res.json();
-
-      // if response is not ok throw exeption
       if (!res.ok) throw data.error;
 
-      // if res is ok then proceed with dispatch
       dispatch({
         type: REGISTER_SUCCESS,
         payload: data.token,
@@ -68,16 +57,22 @@ const AuthState = ({ children }) => {
     }
   };
 
+  /**
+   * Auth context action for logging in use.
+   *
+   * Example:
+   *
+   *      login(user)
+   *      login({email: 'rambo@gmail.com', password: 'hey123')
+   *
+   */
   const login = async (user) => {
     setLoading();
     try {
-      const res = await fetch(AUTH_API, signFetchConfig(user));
+      const res = await fetch(AUTH_API, fetchConfig('POST', user));
       const data = await res.json();
-
-      // if response is not ok throw exeption catched later
       if (!res.ok) throw data.error;
 
-      // if res is ok then proceed
       dispatch({
         type: LOGIN_SUCCESS,
         payload: data.token,
@@ -90,17 +85,21 @@ const AuthState = ({ children }) => {
     }
   };
 
-  const loadUser = async (token) => {
-    if (!token) return;
+  /**
+   * Auth context action for loading user data when authenticated.
+   *
+   * Example:
+   *
+   *      loadUser()
+   *
+   */
+  const loadUser = async () => {
     setLoading();
     try {
-      const res = await fetch(AUTH_API, authFetchConfig(token));
+      const res = await fetch(AUTH_API, fetchConfig('GET'));
       const data = await res.json();
-
-      // if response is not ok throw exeption catched later
       if (!res.ok) throw data.error;
 
-      // if res is ok then proceed
       dispatch({
         type: USER_LOADED,
         payload: data,
@@ -113,6 +112,14 @@ const AuthState = ({ children }) => {
     }
   };
 
+  /**
+   * Auth context action for logout.
+   *
+   * Example:
+   *
+   *      logout()
+   *
+   */
   const logout = () => dispatch({ type: LOGOUT });
 
   return (

@@ -13,7 +13,7 @@ const MainTemplate = ({ location, children }) => {
 
   // If token is already in localStorage load user from server
   useEffect(() => {
-    loadUser(localStorage.token);
+    localStorage.token && loadUser(localStorage.token);
     // eslint-disable-next-line
   }, [localStorage.token]);
 
