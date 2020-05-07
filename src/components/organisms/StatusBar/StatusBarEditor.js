@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import notesContext from '../../../context/notes/notesContext';
+import NotesContext from '../../../context/notes/notesContext';
 import Paragraph from '../../atoms/Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
@@ -43,7 +43,7 @@ const StyledSaveStatus = styled(Paragraph)`
 `;
 
 const StatusBarEditor = () => {
-  const { htmlStats, markdownStats, saveStatus } = useContext(notesContext);
+  const { htmlStats, markdownStats, saveStatus } = useContext(NotesContext);
 
   const { lines, words, letters } = htmlStats;
 

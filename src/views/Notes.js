@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import FilesTemplate from '../templates/FilesTemplate';
-import notesContext from '../context/notes/notesContext';
+import NotesContext from '../context/notes/notesContext';
 import AuthContext from '../context/auth/authContext';
 import Card from '../components/molecules/Card/Card';
 
 const Notes = () => {
-  const { notes, getNotes, clearCurrent } = useContext(notesContext);
+  const { notes, getNotes, clearCurrent } = useContext(NotesContext);
   const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {

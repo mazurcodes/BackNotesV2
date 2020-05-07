@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { Form, Field } from 'react-final-form';
 import Button from '../../atoms/Button/Button';
-import notesContext from '../../../context/notes/notesContext';
+import NotesContext from '../../../context/notes/notesContext';
 import routes from '../../../routes/routes';
 import GlobalContext from '../../../context/global/globalContext';
 import InputNewItemForm from '../../molecules/InputNewItemForm/InputNewItemForm';
@@ -53,7 +53,7 @@ const StyledButtonSave = styled(Button)`
 const NewItemPanel = (props) => {
   const { isActive, panelToggle } = props;
 
-  const { addNote } = useContext(notesContext);
+  const { addNote } = useContext(NotesContext);
   const { setDestination } = useContext(GlobalContext);
 
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

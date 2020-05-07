@@ -1,9 +1,9 @@
 import React, { useContext, useRef, useEffect } from 'react';
-import notesContext from '../../../context/notes/notesContext';
+import NotesContext from '../../../context/notes/notesContext';
 import '../../../theme/css/github-markdown.css';
 
 const PreviewField = () => {
-  const { renderedContent, updateHTMLStats } = useContext(notesContext);
+  const { renderedContent, updateHTMLStats } = useContext(NotesContext);
   const renderedHtml = useRef(null);
 
   useEffect(() => {

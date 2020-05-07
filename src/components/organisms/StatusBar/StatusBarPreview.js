@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import notesContext from '../../../context/notes/notesContext';
+import NotesContext from '../../../context/notes/notesContext';
 import Paragraph from '../../atoms/Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
@@ -29,7 +29,7 @@ const StyledData = styled.span`
 const StatusBarPreview = () => {
   const {
     htmlStats: { lines, words, letters },
-  } = useContext(notesContext);
+  } = useContext(NotesContext);
 
   return (
     <StyledWrapper>

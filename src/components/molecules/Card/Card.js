@@ -8,7 +8,7 @@ import ButtonIcon from '../../atoms/ButtonIcon/ButtonIcon';
 import openIcon from '../../../assets/icons/icon-open.svg';
 import editIcon from '../../../assets/icons/icon-edit.svg';
 import deleteIcon from '../../../assets/icons/icon-delete.svg';
-import notesContext from '../../../context/notes/notesContext';
+import NotesContext from '../../../context/notes/notesContext';
 import routes from '../../../routes/routes';
 import globalContext from '../../../context/global/globalContext';
 
@@ -86,8 +86,8 @@ const StyledDivider = styled.div`
   margin: 0 10px;
 `;
 
-const Card = ({ note: { id, title, desc } }) => {
-  const { deleteNote, setCurrent } = useContext(notesContext);
+const Card = ({ note: { id, title, desc, date } }) => {
+  const { deleteNote, setCurrent } = useContext(NotesContext);
   const { setDestination } = useContext(globalContext);
 
   const onPreview = () => {
@@ -103,6 +103,9 @@ const Card = ({ note: { id, title, desc } }) => {
   const onDelete = () => {
     deleteNote(id);
   };
+
+  const noteDate = new Date(date).toLocaleDateString();
+
   return (
     <StyledWrapper>
       <StyledTechWrapper>
@@ -110,7 +113,7 @@ const Card = ({ note: { id, title, desc } }) => {
       </StyledTechWrapper>
       <StyledTitleWrapper>
         <StyledTitle>{title}</StyledTitle>
-        <StyledDate>04.04.2020</StyledDate>
+        <StyledDate>{noteDate}</StyledDate>
       </StyledTitleWrapper>
       <StyledDescriptionWrapper>
         <StyledDescription>{desc}</StyledDescription>
@@ -130,6 +133,7 @@ Card.propTypes = {
     id: PropTypes.string,
     title: PropTypes.string,
     desc: PropTypes.string,
+    date: PropTypes.string,
   }).isRequired,
 };
 

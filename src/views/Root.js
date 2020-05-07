@@ -11,24 +11,27 @@ import Notes from './Notes';
 import Preview from './Preview';
 import Editor from './Editor';
 import NotesState from '../context/notes/NotesState';
+import AlertState from '../context/alert/AlertState';
 
 const Root = () => {
   return (
     <GlobalState>
       <AuthState>
         <NotesState>
-          <BrowserRouter>
-            <MainTemplate>
-              <Switch>
-                <Route exact path={routes.home} render={() => <Redirect to={routes.notes} />} />
-                <Route exact path={routes.login} component={Login} />
-                <Route exact path={routes.register} component={Register} />
-                <PrivateRoute exact path={routes.notes} component={Notes} />
-                <PrivateRoute exact path={routes.preview} component={Preview} />
-                <PrivateRoute exact path={routes.editor} component={Editor} />
-              </Switch>
-            </MainTemplate>
-          </BrowserRouter>
+          <AlertState>
+            <BrowserRouter>
+              <MainTemplate>
+                <Switch>
+                  <Route exact path={routes.home} render={() => <Redirect to={routes.notes} />} />
+                  <Route exact path={routes.login} component={Login} />
+                  <Route exact path={routes.register} component={Register} />
+                  <PrivateRoute exact path={routes.notes} component={Notes} />
+                  <PrivateRoute exact path={routes.preview} component={Preview} />
+                  <PrivateRoute exact path={routes.editor} component={Editor} />
+                </Switch>
+              </MainTemplate>
+            </BrowserRouter>
+          </AlertState>
         </NotesState>
       </AuthState>
     </GlobalState>

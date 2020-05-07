@@ -355,7 +355,7 @@ const NotesState = ({ children }) => {
         timeoutIndex: state.timeoutIndex,
         initialCurrentValues: state.initialCurrentValues,
         renderedContent: state.renderedContent,
-        error: state.error,
+        notesError: state.error,
         markdownStats: state.markdownStats,
         htmlStats: state.htmlStats,
         saveStatus: state.saveStatus,

@@ -127,7 +127,7 @@ const AuthState = ({ children }) => {
       value={{
         user: state.user,
         isAuthenticated: state.isAuthenticated,
-        error: state.error,
+        authError: state.error,
         loading: state.loading,
         token: state.token,
         register,

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Form, Field, FormSpy } from 'react-final-form';
 import styled from 'styled-components';
-import notesContext from '../../../context/notes/notesContext';
+import NotesContext from '../../../context/notes/notesContext';
 import Spacer from '../../atoms/Spacer/Spacer';
 import InputFieldFinalForm from '../../molecules/InputEditorForm/InputEditorForm';
 import EditorField from '../EditorField/EditorField';
@@ -14,7 +14,7 @@ const StyledForm = styled.form`
 `;
 
 const EditForm = () => {
-  const { initialCurrentValues, updateCurrent } = useContext(notesContext);
+  const { initialCurrentValues, updateCurrent } = useContext(NotesContext);
 
   const onSubmit = () => {};
 
