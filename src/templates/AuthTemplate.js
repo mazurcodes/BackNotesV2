@@ -7,6 +7,7 @@ import AuthForm from '../components/organisms/AuthForm/AuthForm';
 import routes from '../routes/routes';
 import GlobalContext from '../context/global/globalContext';
 import AuthContext from '../context/auth/authContext';
+import Loader from '../components/atoms/Loader/Loader';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -33,7 +34,7 @@ const AuthTemplate = () => {
   const [redirect, setRedirect] = useState(false);
   const onRedirect = () => setRedirect(true);
 
-  const { currentPage } = useContext(GlobalContext);
+  const { currentPage, serverStatus, globalError } = useContext(GlobalContext);
   const { isAuthenticated } = useContext(AuthContext);
 
   if (isAuthenticated) return <Redirect to={routes.notes} />;
@@ -43,7 +44,8 @@ const AuthTemplate = () => {
     <StyledWrapper>
       <StyledLogo src={logo} />
       <StyledParagraph>Your new favorite markdown notes experience</StyledParagraph>
-      <AuthForm onRedirect={onRedirect} />
+      {serverStatus === 'up' && <AuthForm onRedirect={onRedirect} />}
+      {serverStatus !== 'up' && <Loader server={serverStatus} error={globalError} />}
     </StyledWrapper>
   );
 };

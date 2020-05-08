@@ -7,6 +7,9 @@ export const AUTH_API = 'https://backnotes-v2-backend.herokuapp.com/auth';
 // Registration API path
 export const REG_API = 'https://backnotes-v2-backend.herokuapp.com/users';
 
+// Health check server up path
+export const HEALTH_UP_API = 'https://backnotes-v2-backend.herokuapp.com/wakeup';
+
 /**
  * Configures Notes API path.
  *

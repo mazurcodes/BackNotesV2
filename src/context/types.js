@@ -2,6 +2,9 @@
 export const SET_PAGE = 'SET_PAGE';
 export const SET_REDIRECT = 'SET_REDIRECT';
 export const RESET_REDIRECT = 'RESET_REDIRECT';
+export const SERVER_UP = 'SERVER_UP';
+export const SERVER_DOWN = 'SERVER_DOWN';
+export const GLOBAL_ERROR = 'GLOBAL_ERROR';
 
 // Alert Context
 export const SET_ALERT = 'SET_ALERT';

@@ -10,7 +10,7 @@ import NotesContext from '../context/notes/notesContext';
 import AlertContext from '../context/alert/alertContext';
 
 const MainTemplate = ({ location, children }) => {
-  const { setPage } = useContext(GlobalContext);
+  const { setPage, checkServer } = useContext(GlobalContext);
   const { loadUser, authError } = useContext(AuthContext);
   const { notesError } = useContext(NotesContext);
   const { setAlert } = useContext(AlertContext);
@@ -18,20 +18,29 @@ const MainTemplate = ({ location, children }) => {
   // If token is already in localStorage load user from server
 
   useEffect(() => {
+    checkServer();
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     localStorage.token && loadUser(localStorage.token);
+    // eslint-disable-next-line
   }, [localStorage.token]);
 
   // Every change in current path must be reported to global state
   useEffect(() => {
     setPage(location.pathname);
+    // eslint-disable-next-line
   }, [location]);
 
   useEffect(() => {
     authError && setAlert(authError);
+    // eslint-disable-next-line
   }, [authError]);
 
   useEffect(() => {
     notesError && setAlert(notesError);
+    // eslint-disable-next-line
   }, [notesError]);
 
   return (

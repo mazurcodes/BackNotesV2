@@ -1,4 +1,4 @@
-import { SET_PAGE, SET_REDIRECT, RESET_REDIRECT } from '../types';
+import { SET_PAGE, SET_REDIRECT, RESET_REDIRECT, SERVER_UP, SERVER_DOWN } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -16,6 +16,17 @@ export default (state, action) => {
       return {
         ...state,
         redirectTo: '',
+      };
+    case SERVER_UP:
+      return {
+        ...state,
+        serverStatus: 'up',
+      };
+    case SERVER_DOWN:
+      return {
+        ...state,
+        serverStatus: 'down',
+        error: "We're sorry. Server is down...",
       };
     default:
       return state;
