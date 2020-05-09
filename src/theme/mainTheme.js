@@ -13,6 +13,10 @@ export const lightTheme = {
     l: '3.5rem',
     xl: '5rem',
   },
+  device: {
+    mobile: '430px',
+    tablet: '800px',
+  },
 };
 
 export const darkTheme = {

@@ -28,6 +28,7 @@ const StyledParagraph = styled(Paragraph)`
   margin: 20px 0;
   color: white;
   font-size: calc(1rem + 2vw);
+  text-align: center;
 `;
 
 const AuthTemplate = () => {

@@ -8,16 +8,30 @@ const StyledWrapper = styled.div`
   align-items: center;
   background-color: #ffc01f;
   height: 50px;
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+    height: 45px;
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    height: 30px;
+  }
 `;
 
 const StyledTitle = styled(Heading)`
   color: white;
   font-size: 24px;
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+    font-size: 20px;
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    font-size: 16px;
+  }
 `;
 
 const TitleBar = () => {
   return (
-    <StyledWrapper>
+    <StyledWrapper className="title-bar">
       <StyledTitle>User files</StyledTitle>
     </StyledWrapper>
   );

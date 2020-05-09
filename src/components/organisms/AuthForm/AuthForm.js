@@ -17,10 +17,20 @@ const StyledWrapper = styled.div`
   width: 460px;
   background-color: white;
   border-radius: 10px;
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+    width: 400px;
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    width: 310px;
+  }
 `;
 
 const StyledFormHeading = styled(Heading)`
   margin: 35px 0;
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    margin: 20px 0;
+    font-size: 20px;
+  }
 `;
 
 const StyledForm = styled.form`
@@ -28,10 +38,15 @@ const StyledForm = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 const StyledInput = styled(Input)`
   margin-bottom: 20px;
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    width: 90%;
+    margin-bottom: 10px;
+  }
 
   ${({ error }) =>
     error &&
@@ -48,6 +63,10 @@ const StyledError = styled.div`
 
 const StyledButton = styled(Button)`
   margin-bottom: 40px;
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    width: 90%;
+    margin-bottom: 30px;
+  }
 `;
 
 const StyledRedirectLink = styled.a`
