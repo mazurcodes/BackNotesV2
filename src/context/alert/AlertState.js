@@ -52,7 +52,7 @@ const AlertState = ({ children }) => {
       payload: newAlert,
     });
 
-    removeAlert(newAlert.id, 10000);
+    removeAlert(newAlert.id, 7000);
   };
 
   return (

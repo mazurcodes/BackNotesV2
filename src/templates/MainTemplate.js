@@ -53,7 +53,7 @@ const MainTemplate = ({ location, children }) => {
 
 MainTemplate.propTypes = {
   location: PropTypes.objectOf(PropTypes.string).isRequired,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array]).isRequired,
 };
 
 export default withRouter(MainTemplate);

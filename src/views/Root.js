@@ -12,6 +12,7 @@ import Preview from './Preview';
 import Editor from './Editor';
 import NotesState from '../context/notes/NotesState';
 import AlertState from '../context/alert/AlertState';
+import AlertPanel from '../components/molecules/AlertPanel/AlertPanel';
 
 const Root = () => {
   return (
@@ -29,6 +30,7 @@ const Root = () => {
                   <PrivateRoute exact path={routes.preview} component={Preview} />
                   <PrivateRoute exact path={routes.editor} component={Editor} />
                 </Switch>
+                <AlertPanel />
               </MainTemplate>
             </BrowserRouter>
           </AlertState>

@@ -38,7 +38,6 @@ const AuthState = ({ children }) => {
    *
    */
   const register = async (user) => {
-    console.log(fetchConfig('POST', user));
     setLoading();
     try {
       const res = await fetch(REG_API, fetchConfig('POST', user));
@@ -52,7 +51,7 @@ const AuthState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
-        payload: err,
+        payload: `Register error: ${err}`,
       });
     }
   };
@@ -80,7 +79,7 @@ const AuthState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
-        payload: err,
+        payload: `Login error: ${err}`,
       });
     }
   };
@@ -107,7 +106,7 @@ const AuthState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: AUTH_ERROR,
-        payload: err,
+        payload: `Loading user error: ${err}`,
       });
     }
   };

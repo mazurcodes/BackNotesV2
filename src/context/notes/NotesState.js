@@ -65,10 +65,9 @@ const NotesState = ({ children }) => {
         payload: notesList,
       });
     } catch (err) {
-      console.log('Get notes error: ', err);
       dispatch({
         type: NOTES_ERROR,
-        payload: err,
+        payload: `Notes error: ${err}`,
       });
     }
   };
@@ -96,10 +95,9 @@ const NotesState = ({ children }) => {
         payload: newNote,
       });
     } catch (err) {
-      console.log('Add note error: ', err);
       dispatch({
         type: NOTES_ERROR,
-        payload: err,
+        payload: `Creating error: ${err}`,
       });
     }
   };
@@ -123,10 +121,9 @@ const NotesState = ({ children }) => {
         payload: id,
       });
     } catch (err) {
-      console.log('Delete note error: ', err);
       dispatch({
         type: NOTES_ERROR,
-        payload: err,
+        payload: `Delete error: ${err}`,
       });
     }
   };
@@ -155,10 +152,9 @@ const NotesState = ({ children }) => {
         payload: note,
       });
     } catch (err) {
-      console.log('Update note error: ', err);
       dispatch({
         type: NOTES_ERROR,
-        payload: err,
+        payload: `Update error: ${err}`,
       });
     }
   };
@@ -184,10 +180,9 @@ const NotesState = ({ children }) => {
         payload: note,
       });
     } catch (err) {
-      console.log('Set current file to edit error: ', err);
       dispatch({
         type: NOTES_ERROR,
-        payload: err,
+        payload: `Note error ${err}`,
       });
     }
   };
