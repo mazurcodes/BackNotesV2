@@ -16,8 +16,7 @@ const StyledPanel = styled.div`
 
 const AlertPanel = () => {
   const { alerts } = useContext(AlertContext);
-
-  const alertList = alerts.map((alert) => <Alert key={alert.id} alertMsg={alert.msg} />);
+  const alertList = alerts.map((alertObj) => <Alert key={alertObj.id} alertObj={alertObj} />);
 
   return <StyledPanel>{alertList}</StyledPanel>;
 };

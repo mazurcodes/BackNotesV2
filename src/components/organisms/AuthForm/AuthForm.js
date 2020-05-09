@@ -135,8 +135,8 @@ const AuthForm = ({ onRedirect }) => {
                     error={meta.error && meta.touched}
                   />
                   {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
-                  {authError === 'Login error: Invalid email' && (
-                    <StyledError>Invalid Email</StyledError>
+                  {authError && authError.msg.includes('email') && (
+                    <StyledError>{authError.msg}</StyledError>
                   )}
                 </>
               )}
@@ -154,7 +154,9 @@ const AuthForm = ({ onRedirect }) => {
                     error={meta.error && meta.touched}
                   />
                   {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
-                  {authError === 'Invalid password' && <StyledError>{authError}</StyledError>}
+                  {authError && authError.msg.includes('password') && (
+                    <StyledError>{authError.msg}</StyledError>
+                  )}
                 </>
               )}
             />

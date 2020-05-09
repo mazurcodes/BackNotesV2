@@ -15,16 +15,16 @@ const StyledAlert = styled(Heading)`
   word-wrap: break-word;
 `;
 
-const Alert = ({ alertMsg }) => {
+const Alert = ({ alertObj: { type, msg } }) => {
   return (
     <StyledWrapper>
-      <StyledAlert>{alertMsg}</StyledAlert>
+      <StyledAlert>{alert && `${type}: ${msg}`}</StyledAlert>
     </StyledWrapper>
   );
 };
 
 Alert.propTypes = {
-  alertMsg: PropTypes.string.isRequired,
+  alertObj: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default Alert;
