@@ -135,7 +135,9 @@ const AuthForm = ({ onRedirect }) => {
                     error={meta.error && meta.touched}
                   />
                   {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
-                  {authError === 'Invalid email' && <StyledError>{authError}</StyledError>}
+                  {authError === 'Login error: Invalid email' && (
+                    <StyledError>Invalid Email</StyledError>
+                  )}
                 </>
               )}
             />

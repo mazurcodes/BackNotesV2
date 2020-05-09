@@ -21,6 +21,13 @@ import {
 } from '../types';
 import { notesApi, fetchConfig } from '../api';
 import { updateMarkdownStats as upMdStats, updateHTMLStats as upHTMLStats } from './helpers';
+import createError, {
+  GET_NOTES_ERROR,
+  ADD_NOTE_ERROR,
+  DELETE_NOTE_ERROR,
+  UPDATE_NOTE_ERROR,
+  CURRENT_NOTE_ERROR,
+} from '../errors';
 
 const NotesState = ({ children }) => {
   const initialState = {
@@ -67,7 +74,7 @@ const NotesState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: NOTES_ERROR,
-        payload: `Notes error: ${err}`,
+        payload: createError(GET_NOTES_ERROR, err),
       });
     }
   };
@@ -97,7 +104,7 @@ const NotesState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: NOTES_ERROR,
-        payload: `Creating error: ${err}`,
+        payload: createError(ADD_NOTE_ERROR, err),
       });
     }
   };
@@ -123,7 +130,7 @@ const NotesState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: NOTES_ERROR,
-        payload: `Delete error: ${err}`,
+        payload: createError(DELETE_NOTE_ERROR, err),
       });
     }
   };
@@ -154,7 +161,7 @@ const NotesState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: NOTES_ERROR,
-        payload: `Update error: ${err}`,
+        payload: createError(UPDATE_NOTE_ERROR, err),
       });
     }
   };
@@ -182,7 +189,7 @@ const NotesState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: NOTES_ERROR,
-        payload: `Note error ${err}`,
+        payload: createError(CURRENT_NOTE_ERROR, err),
       });
     }
   };

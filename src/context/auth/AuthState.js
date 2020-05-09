@@ -14,6 +14,7 @@ import {
   LOADING,
   LOGOUT,
 } from '../types';
+import createError, { USER_ERROR, LOGIN_ERROR, REGISTER_ERROR } from '../errors';
 
 const AuthState = ({ children }) => {
   const initialState = {
@@ -51,7 +52,7 @@ const AuthState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
-        payload: `Register error: ${err}`,
+        payload: createError(REGISTER_ERROR, err),
       });
     }
   };
@@ -79,7 +80,7 @@ const AuthState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
-        payload: `Login error: ${err}`,
+        payload: createError(LOGIN_ERROR, err),
       });
     }
   };
@@ -106,7 +107,7 @@ const AuthState = ({ children }) => {
     } catch (err) {
       dispatch({
         type: AUTH_ERROR,
-        payload: `Loading user error: ${err}`,
+        payload: createError(USER_ERROR, err),
       });
     }
   };

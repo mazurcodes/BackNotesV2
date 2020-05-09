@@ -1,7 +1,6 @@
 import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 import ContextDevTool from 'react-context-devtool';
-import { v1 as uuidv1 } from 'uuid';
 import AlertContext from './alertContext';
 import alertReducer from './alertReducer';
 import { SET_ALERT, REMOVE_ALERT } from '../types';
@@ -21,8 +20,6 @@ const AlertState = ({ children }) => {
    *
    */
   const removeAlert = (id, time) => {
-    if (typeof id !== 'string' && typeof time !== 'number') return;
-
     setTimeout(
       () =>
         dispatch({
@@ -38,21 +35,16 @@ const AlertState = ({ children }) => {
    *
    * Example:
    *
-   *      setAlert(alertObject);
+   *      setAlert(errorObject);
    *
    */
-  const setAlert = (alert) => {
-    if (typeof alert !== 'string') return;
-    const newAlert = {
-      id: uuidv1(),
-      msg: alert,
-    };
+  const setAlert = (error) => {
     dispatch({
       type: SET_ALERT,
-      payload: newAlert,
+      payload: error,
     });
 
-    removeAlert(newAlert.id, 7000);
+    removeAlert(error.id, 7000);
   };
 
   return (
