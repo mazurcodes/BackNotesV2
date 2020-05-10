@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Form, Field } from 'react-final-form';
 import Heading from '../../atoms/Heading/Heading';
-import Input from '../../atoms/Input/Input';
 import Button from '../../atoms/Button/Button';
 import GlobalContext from '../../../context/global/globalContext';
 import AuthContext from '../../../context/auth/authContext';
 import routes from '../../../routes/routes';
+import InputAuthForm from '../../molecules/InputAuthForm/InputAuthForm';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -39,26 +39,6 @@ const StyledForm = styled.form`
   justify-content: center;
   align-items: center;
   width: 100%;
-`;
-
-const StyledInput = styled(Input)`
-  margin-bottom: 20px;
-  @media (max-width: ${({ theme }) => theme.device.mobile}) {
-    width: 90%;
-    margin-bottom: 10px;
-  }
-
-  ${({ error }) =>
-    error &&
-    css`
-      background-color: ${({ theme }) => theme.errorInput};
-    `}
-`;
-
-const StyledError = styled.div`
-  margin-bottom: 20px;
-  color: red;
-  font-weight: ${({ theme }) => theme.bold};
 `;
 
 const StyledButton = styled(Button)`
@@ -127,73 +107,44 @@ const AuthForm = ({ onRedirect }) => {
               name="name"
               render={({ input, meta }) =>
                 currentPage === '/register' && (
-                  <>
-                    <StyledInput
-                      type="text"
-                      name={input.name}
-                      value={input.value}
-                      onChange={input.onChange}
-                      placeholder="Name"
-                      error={meta.error && meta.touched}
-                    />
-                    {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
-                  </>
+                  <InputAuthForm type="text" placeholder="Name" input={input} meta={meta} />
                 )
               }
             />
             <Field
               name="email"
               render={({ input, meta }) => (
-                <>
-                  <StyledInput
-                    type="email"
-                    name={input.name}
-                    value={input.value}
-                    onChange={input.onChange}
-                    placeholder="Email"
-                    error={meta.error && meta.touched}
-                  />
-                  {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
-                  {authError && authError.msg.includes('email') && (
-                    <StyledError>{authError.msg}</StyledError>
-                  )}
-                </>
+                <InputAuthForm
+                  type="email"
+                  placeholder="Email"
+                  input={input}
+                  meta={meta}
+                  authError={authError}
+                />
               )}
             />
             <Field
               name="password"
               render={({ input, meta }) => (
-                <>
-                  <StyledInput
-                    type="password"
-                    name={input.name}
-                    value={input.value}
-                    onChange={input.onChange}
-                    placeholder="Password"
-                    error={meta.error && meta.touched}
-                  />
-                  {meta.error && meta.touched && <StyledError>{meta.error}</StyledError>}
-                  {authError && authError.msg.includes('password') && (
-                    <StyledError>{authError.msg}</StyledError>
-                  )}
-                </>
+                <InputAuthForm
+                  type="password"
+                  placeholder="Password"
+                  input={input}
+                  meta={meta}
+                  authError={authError}
+                />
               )}
             />
             <Field
               name="password2"
               render={({ input, meta }) =>
                 currentPage === '/register' && (
-                  <>
-                    <StyledInput
-                      type="password"
-                      name={input.name}
-                      value={input.value}
-                      onChange={input.onChange}
-                      placeholder="Confirm password"
-                      error={meta.error && meta.touched}
-                    />
-                    {meta.error && <StyledError>{meta.error}</StyledError>}
-                  </>
+                  <InputAuthForm
+                    type="password"
+                    placeholder="Confirm password"
+                    input={input}
+                    meta={meta}
+                  />
                 )
               }
             />

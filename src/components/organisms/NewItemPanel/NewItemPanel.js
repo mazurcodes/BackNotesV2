@@ -7,7 +7,7 @@ import NotesContext from '../../../context/notes/notesContext';
 import routes from '../../../routes/routes';
 import GlobalContext from '../../../context/global/globalContext';
 import InputNewItemForm from '../../molecules/InputNewItemForm/InputNewItemForm';
-import TextAreaNewItemForm from '../../molecules/InputNewItemForm/TextAreaNewItemForm';
+import TextAreaNewItemForm from '../../molecules/TextAreaFinalForm/TextAreaNewItemForm';
 
 const StyledWrapper = styled.div`
   width: 600px;
