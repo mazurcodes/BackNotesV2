@@ -39,8 +39,8 @@ const AuthTemplate = () => {
   const { isAuthenticated } = useContext(AuthContext);
 
   if (isAuthenticated) return <Redirect to={routes.notes} />;
-  if (redirect)
-    return <Redirect push to={currentPage === routes.register ? routes.login : routes.register} />;
+  if (redirect && currentPage === routes.register) return <Redirect push to={routes.login} />;
+  if (redirect && currentPage === routes.login) return <Redirect push to={routes.register} />;
   return (
     <StyledWrapper>
       <StyledLogo src={logo} />
