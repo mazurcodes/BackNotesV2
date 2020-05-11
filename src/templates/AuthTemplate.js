@@ -17,7 +17,7 @@ const StyledWrapper = styled.div`
   align-items: center;
   width: 100vw;
   min-height: 100vh;
-  background-color: ${({ theme }) => theme.notes};
+  background-color: ${({ theme }) => theme.blue};
 `;
 
 const StyledLogo = styled.img`

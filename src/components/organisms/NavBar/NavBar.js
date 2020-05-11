@@ -12,7 +12,7 @@ const StyledWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #464646;
+  background-color: ${({ theme }) => theme.darkbrown};
   height: 70px;
   padding: 0 55px;
 

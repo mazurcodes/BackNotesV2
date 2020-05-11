@@ -5,8 +5,9 @@ import Heading from '../../atoms/Heading/Heading';
 
 const StyledWrapper = styled.div`
   background-color: rgb(255, 80, 80);
-  padding: 10px 5px;
+  padding: 15px 10px;
   margin-bottom: 10px;
+  border-radius: 30px;
 `;
 
 const StyledAlert = styled(Heading)`
