@@ -51,7 +51,7 @@ const AuthTemplate = () => {
   return (
     <StyledWrapper>
       <StyledLogo src={logo} />
-      <StyledParagraph>Your new favorite markdown notes experience</StyledParagraph>
+      <StyledParagraph>Your new favorite markdown editor</StyledParagraph>
       {serverStatus === 'up' && !localStorage.token && <AuthForm onRedirect={onRedirect} />}
       {serverStatus !== 'up' && localStorage.token && (
         <Loader server={serverStatus} error={globalError} />

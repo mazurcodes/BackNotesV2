@@ -8,7 +8,7 @@ const PreviewField = () => {
 
   useEffect(() => {
     if (!renderedContent) {
-      renderedHtml.current.innerHTML = '<h1>Loading...</h1>  ...or note not selected :(';
+      renderedHtml.current.innerHTML = 'Loading...';
       updateHTMLStats(renderedHtml.current);
     } else {
       renderedHtml.current.innerHTML = renderedContent;

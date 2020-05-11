@@ -81,6 +81,7 @@ export default (state, action) => {
       return {
         ...state,
         current: null,
+        renderedContent: '',
       };
     case FILTER_NOTES:
       return {

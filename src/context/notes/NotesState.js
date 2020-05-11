@@ -35,7 +35,7 @@ const NotesState = ({ children }) => {
     filtered: [],
     current: null,
     initialCurrentValues: null,
-    renderedContent: null,
+    renderedContent: '',
     debounceIndex: 0,
     markdownStats: null,
     htmlStats: null,
