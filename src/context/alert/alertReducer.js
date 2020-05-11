@@ -1,4 +1,4 @@
-import { SET_ALERT, REMOVE_ALERT } from '../types';
+import { SET_ALERT, REMOVE_ALERT, CLEAR_ALERTS } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -11,6 +11,11 @@ export default (state, action) => {
       return {
         ...state,
         alerts: state.alerts.filter((alert) => alert.id !== action.payload),
+      };
+    case CLEAR_ALERTS:
+      return {
+        ...state,
+        alerts: [],
       };
     default:
       return state;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ContextDevTool from 'react-context-devtool';
 import AlertContext from './alertContext';
 import alertReducer from './alertReducer';
-import { SET_ALERT, REMOVE_ALERT } from '../types';
+import { SET_ALERT, REMOVE_ALERT, CLEAR_ALERTS } from '../types';
 
 const AlertState = ({ children }) => {
   const initialState = {
@@ -44,11 +44,17 @@ const AlertState = ({ children }) => {
       payload: error,
     });
 
-    removeAlert(error.id, 7000);
+    removeAlert(error.id, 5000);
+  };
+
+  const clearAlerts = () => {
+    dispatch({
+      type: CLEAR_ALERTS,
+    });
   };
 
   return (
-    <AlertContext.Provider value={{ alerts: state.alerts, setAlert }}>
+    <AlertContext.Provider value={{ alerts: state.alerts, setAlert, clearAlerts }}>
       <ContextDevTool context={AlertContext} id="alertContext" displayName="Alert Context" />
       {children}
     </AlertContext.Provider>

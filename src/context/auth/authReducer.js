@@ -7,6 +7,7 @@ import {
   USER_LOADED,
   LOGOUT,
   LOADING,
+  CLEAR_ERRORS,
 } from '../types';
 
 export default (state, action) => {
@@ -19,6 +20,7 @@ export default (state, action) => {
         token: action.payload,
         loading: false,
         isAuthenticated: true,
+        error: null,
       };
 
     case REGISTER_FAIL:
@@ -28,7 +30,7 @@ export default (state, action) => {
       localStorage.removeItem('token');
       return {
         ...state,
-        error: action.payload,
+        error: action.payload || null,
         user: null,
         token: '',
         loading: false,
@@ -41,6 +43,7 @@ export default (state, action) => {
         user: action.payload,
         loading: false,
         isAuthenticated: true,
+        error: null,
       };
 
     case LOADING:
@@ -49,6 +52,11 @@ export default (state, action) => {
         loading: true,
       };
 
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
     default:
       return state;
   }

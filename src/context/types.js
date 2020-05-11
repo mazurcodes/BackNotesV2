@@ -9,6 +9,7 @@ export const GLOBAL_ERROR = 'GLOBAL_ERROR';
 // Alert Context
 export const SET_ALERT = 'SET_ALERT';
 export const REMOVE_ALERT = 'REMOVE_ALERT';
+export const CLEAR_ALERTS = 'CLEAR_ALERTS';
 
 // AuthContext
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/logos/backnotesv2.svg';
@@ -8,6 +8,7 @@ import routes from '../routes/routes';
 import GlobalContext from '../context/global/globalContext';
 import AuthContext from '../context/auth/authContext';
 import Loader from '../components/atoms/Loader/Loader';
+import AlertContext from '../context/alert/alertContext';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -36,7 +37,13 @@ const AuthTemplate = () => {
   const onRedirect = () => setRedirect(true);
 
   const { currentPage, serverStatus, globalError } = useContext(GlobalContext);
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, clearAuthError } = useContext(AuthContext);
+  const { clearAlerts } = useContext(AlertContext);
+
+  useEffect(() => {
+    clearAlerts();
+    clearAuthError();
+  }, []);
 
   if (isAuthenticated) return <Redirect to={routes.notes} />;
   if (redirect && currentPage === routes.register) return <Redirect push to={routes.login} />;

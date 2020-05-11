@@ -13,7 +13,7 @@ const MainTemplate = ({ location, children }) => {
   const { setPage, checkServer } = useContext(GlobalContext);
   const { loadUser, authError } = useContext(AuthContext);
   const { notesError } = useContext(NotesContext);
-  const { setAlert } = useContext(AlertContext);
+  const { setAlert, clearAlerts } = useContext(AlertContext);
 
   // If token is already in localStorage load user from server
 
@@ -35,6 +35,7 @@ const MainTemplate = ({ location, children }) => {
 
   useEffect(() => {
     authError && setAlert(authError);
+    !authError && clearAlerts();
     // eslint-disable-next-line
   }, [authError]);
 

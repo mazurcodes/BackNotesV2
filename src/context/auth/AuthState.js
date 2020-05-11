@@ -13,6 +13,7 @@ import {
   AUTH_ERROR,
   LOADING,
   LOGOUT,
+  CLEAR_ERRORS,
 } from '../types';
 import createError, { USER_ERROR, LOGIN_ERROR, REGISTER_ERROR } from '../errors';
 
@@ -122,6 +123,8 @@ const AuthState = ({ children }) => {
    */
   const logout = () => dispatch({ type: LOGOUT });
 
+  const clearAuthError = () => dispatch({ type: CLEAR_ERRORS });
+
   return (
     <AuthContext.Provider
       value={{
@@ -134,6 +137,7 @@ const AuthState = ({ children }) => {
         login,
         loadUser,
         logout,
+        clearAuthError,
       }}
     >
       <ContextDevTool context={AuthContext} id="authContext" displayName="Auth Context" />
