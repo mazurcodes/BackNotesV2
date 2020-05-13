@@ -35,7 +35,6 @@ const StyledWrapper = styled.div`
       'tech title'
       'desc desc'
       'actions actions';
-    /* height: 250px; */
     height: unset;
     & > * {
       margin: unset;
@@ -54,7 +53,6 @@ const StyledTechWrapper = styled.div`
     grid-area: 'tech';
     width: 100%;
     height: 75px;
-    /* background-color: pink; */
   }
 `;
 
@@ -76,7 +74,6 @@ const StyledTitleWrapper = styled.div`
     width: 100%;
     height: 75px;
     text-align: right;
-    /* background-color: orange; */
   }
 `;
 
@@ -123,7 +120,7 @@ const StyledActionsWrapper = styled.div`
     grid-area: actions;
     width: 100%;
     padding: 10px 0;
-    /* background-color: lime; */
+    justify-content: space-around;
   }
 `;
 

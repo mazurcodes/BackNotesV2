@@ -8,6 +8,7 @@ const ButtonIcon = styled.button`
   background-image: url(${({ icon }) => icon});
   background-position: center;
   background-repeat: no-repeat;
+  background-size: contain;
   border: none;
   border-radius: 7px;
   :hover {

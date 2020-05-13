@@ -56,10 +56,10 @@ const StyledButtonIcon = styled(ButtonIcon)`
     border: 2px solid white;
   }
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
-    height: 30px;
+    height: 40px;
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
-    height: 30px;
+    height: 40px;
   }
 `;
 
@@ -75,7 +75,7 @@ const NavBar = React.memo(() => {
       <StyledLogo src={logo} />
       <StyledUserWrapper>
         <StyledParagraph>Welcome, {user && user.name}</StyledParagraph>
-        <StyledButtonIcon icon={logoutIcon} smallIcon={logoutIcon} onClick={onLogout} />
+        <StyledButtonIcon icon={logoutIcon} onClick={onLogout} />
       </StyledUserWrapper>
     </StyledWrapper>
   );
