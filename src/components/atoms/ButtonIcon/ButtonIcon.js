@@ -13,6 +13,10 @@ const ButtonIcon = styled.button`
   :hover {
     cursor: pointer;
   }
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+    background-image: url(${({ icon, smallIcon }) => smallIcon || icon});
+  }
 `;
 
 export default ButtonIcon;

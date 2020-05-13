@@ -24,12 +24,38 @@ const StyledWrapper = styled.div`
   & > * {
     margin-right: 30px;
   }
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1.5fr 1fr 1fr;
+    grid-template-areas:
+      'tech title'
+      'desc desc'
+      'actions actions';
+    /* height: 250px; */
+    height: unset;
+    & > * {
+      margin: unset;
+    }
+  }
 `;
 
 const StyledTechWrapper = styled.div`
   height: 100%;
   width: 100px;
   text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    grid-area: 'tech';
+    width: 100%;
+    height: 75px;
+    /* background-color: pink; */
+  }
 `;
 
 const StyledLogo = styled.img`
@@ -40,12 +66,23 @@ const StyledTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 250px;
+  width: 300px;
   height: 100%;
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    grid-area: title;
+    width: 100%;
+    height: 75px;
+    text-align: right;
+    /* background-color: orange; */
+  }
 `;
 
 const StyledTitle = styled(Heading)`
   font-size: 20px;
+  word-wrap: break-word;
 `;
 
 const StyledDate = styled(Paragraph)`
@@ -55,6 +92,18 @@ const StyledDate = styled(Paragraph)`
 
 const StyledDescriptionWrapper = styled.div`
   flex: 1;
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    grid-area: desc;
+    height: 100%;
+    width: 100%;
+    padding: 10px 0 10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
 `;
 
 const StyledDescription = styled(Paragraph)`
@@ -67,6 +116,15 @@ const StyledActionsWrapper = styled.div`
   align-items: center;
   width: 250px;
   height: 100%;
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    grid-area: actions;
+    width: 100%;
+    padding: 10px 0;
+    /* background-color: lime; */
+  }
 `;
 
 const StyledButtonIcon = styled(ButtonIcon)`
@@ -84,6 +142,11 @@ const StyledDivider = styled.div`
   width: 2px;
   background-color: rgba(0, 0, 0, 0.1);
   margin: 0 10px;
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    display: none;
+  }
 `;
 
 const Card = ({ note: { id, title, desc, date } }) => {

@@ -13,6 +13,13 @@ const StyledListWrapper = styled.div`
   & > * {
     margin-right: 30px;
   }
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+    display: none;
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    display: none;
+  }
 `;
 
 const StyledTechWrapper = styled.div`

@@ -43,6 +43,7 @@ const AuthTemplate = () => {
   useEffect(() => {
     clearAlerts();
     clearAuthError();
+    // eslint-disable-next-line
   }, []);
 
   if (isAuthenticated) return <Redirect to={routes.notes} />;

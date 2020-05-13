@@ -75,7 +75,7 @@ const NavBar = React.memo(() => {
       <StyledLogo src={logo} />
       <StyledUserWrapper>
         <StyledParagraph>Welcome, {user && user.name}</StyledParagraph>
-        <StyledButtonIcon icon={logoutIcon} onClick={onLogout} />
+        <StyledButtonIcon icon={logoutIcon} smallIcon={logoutIcon} onClick={onLogout} />
       </StyledUserWrapper>
     </StyledWrapper>
   );
