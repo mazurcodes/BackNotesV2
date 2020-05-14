@@ -12,6 +12,29 @@ const StyledEditPreviewField = styled.div`
 
 const StyledEditField = styled(TextArea)`
   flex: 1;
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    height: 100vh;
+    font-size: 14px;
+  }
+`;
+
+const StyledSpacer = styled(Spacer)`
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    display: none;
+  }
+`;
+
+const StyledPreviewField = styled.div`
+  flex: 1;
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    display: none;
+  }
 `;
 
 const EditorField = ({ input, contentValueMutator }) => {
@@ -33,8 +56,10 @@ const EditorField = ({ input, contentValueMutator }) => {
   return (
     <StyledEditPreviewField>
       <StyledEditField type="text" {...input} onKeyDown={handleTabKeyDown} />
-      <Spacer width="20px" height="100%" color="#ddd" />
-      <PreviewField />
+      <StyledSpacer width="20px" height="100%" color="#ddd" />
+      <StyledPreviewField>
+        <PreviewField />
+      </StyledPreviewField>
     </StyledEditPreviewField>
   );
 };

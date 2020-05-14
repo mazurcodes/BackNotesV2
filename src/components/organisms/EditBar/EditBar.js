@@ -15,6 +15,12 @@ const StyledWrapper = styled.div`
   background-color: #ffc01f;
   height: 50px;
   padding: 0 50px;
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    padding: 0 15px;
+    height: 25px;
+  }
 `;
 
 const StyledTitleField = styled.div`
@@ -37,6 +43,12 @@ const StyledInput = styled(Input)`
   height: 35px;
   width: calc(50px + 25vw);
   max-width: 375px;
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    display: none;
+  }
 `;
 
 const EditBar = () => {
@@ -47,7 +59,7 @@ const EditBar = () => {
   return (
     <StyledWrapper>
       <StyledTitleField>
-        <StyledTitle>Current file:</StyledTitle>
+        <StyledTitle>Note:</StyledTitle>
         <StyledDataContent>
           {initialCurrentValues ? initialCurrentValues.title : ''}
         </StyledDataContent>

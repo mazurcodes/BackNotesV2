@@ -19,6 +19,13 @@ const StyledWrapper = styled.div`
 
 const StyledBarWrapper = styled.div`
   display: flex;
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    &:nth-of-type(2) {
+      display: none;
+    }
+  }
 `;
 
 const StyledStatus = styled(Paragraph)`
@@ -53,19 +60,6 @@ const StatusBarEditor = () => {
   return (
     <StyledWrapper>
       <StyledBarWrapper>
-        <StyledStatus>HTML:</StyledStatus>
-        <StyledStatus>
-          <StyledData>{lines}</StyledData> lines
-        </StyledStatus>
-        <StyledStatus>
-          <StyledData>{words}</StyledData> words
-        </StyledStatus>
-        <StyledStatus>
-          <StyledData>{letters}</StyledData> letters
-        </StyledStatus>
-      </StyledBarWrapper>
-      <StyledSaveStatus saveStatus={saveStatus}>{saveStatus}</StyledSaveStatus>
-      <StyledBarWrapper>
         <StyledStatus>Markdown:</StyledStatus>
         <StyledStatus>
           <StyledData>{markdownStats.lines}</StyledData> lines
@@ -75,6 +69,19 @@ const StatusBarEditor = () => {
         </StyledStatus>
         <StyledStatus>
           <StyledData>{markdownStats.letters}</StyledData> letters
+        </StyledStatus>
+      </StyledBarWrapper>
+      <StyledSaveStatus saveStatus={saveStatus}>{saveStatus}</StyledSaveStatus>
+      <StyledBarWrapper>
+        <StyledStatus>HTML:</StyledStatus>
+        <StyledStatus>
+          <StyledData>{lines}</StyledData> lines
+        </StyledStatus>
+        <StyledStatus>
+          <StyledData>{words}</StyledData> words
+        </StyledStatus>
+        <StyledStatus>
+          <StyledData>{letters}</StyledData> letters
         </StyledStatus>
       </StyledBarWrapper>
     </StyledWrapper>

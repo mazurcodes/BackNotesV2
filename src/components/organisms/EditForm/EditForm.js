@@ -3,7 +3,7 @@ import { Form, Field, FormSpy } from 'react-final-form';
 import styled from 'styled-components';
 import NotesContext from '../../../context/notes/notesContext';
 import Spacer from '../../atoms/Spacer/Spacer';
-import InputFieldFinalForm from '../../molecules/InputEditorForm/InputEditorForm';
+import InputEditorForm from '../../molecules/InputEditorForm/InputEditorForm';
 import EditorField from '../EditorField/EditorField';
 
 const StyledForm = styled.form`
@@ -75,13 +75,13 @@ const EditForm = () => {
             <Field
               name="title"
               render={({ input, meta }) => (
-                <InputFieldFinalForm label="Title" input={input} meta={meta} />
+                <InputEditorForm label="Title" input={input} meta={meta} />
               )}
             />
             <Field
               name="desc"
               render={({ input, meta }) => (
-                <InputFieldFinalForm label="Description" input={input} meta={meta} />
+                <InputEditorForm label="Description" input={input} meta={meta} />
               )}
             />
             <Spacer height="5px" width="100%" color="#ddd" />

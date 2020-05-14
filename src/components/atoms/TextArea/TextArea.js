@@ -7,6 +7,11 @@ const TextArea = styled.textarea`
   resize: none;
   word-wrap: break-word;
   word-break: break-all;
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    padding: 15px 15px 15px 30px;
+  }
 `;
 
 export default TextArea;

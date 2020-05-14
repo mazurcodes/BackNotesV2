@@ -7,6 +7,11 @@ import Input from '../../atoms/Input/Input';
 const StyledLabel = styled(Paragraph)`
   display: block;
   margin-left: 50px;
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    margin-left: 20px;
+  }
 `;
 
 const StyledInput = styled(Input)`
@@ -19,6 +24,12 @@ const StyledInput = styled(Input)`
   padding-left: 10px;
   padding-right: 10px;
   width: calc(400px + 20vw);
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    margin-left: 15px;
+    width: 90%;
+  }
 `;
 
 const InputFieldFinalForm = ({ input, meta, label }) => (
