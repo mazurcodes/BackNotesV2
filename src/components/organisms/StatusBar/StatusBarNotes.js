@@ -20,6 +20,14 @@ export const StyledStatus = styled(Paragraph)`
   color: white;
   font-size: 12px;
   margin-right: 10px;
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    &:nth-of-type(2) {
+      display: none;
+    }
+  }
 `;
 
 export const StyledData = styled.span`
@@ -46,7 +54,7 @@ const StatusBarNotes = () => {
         Notes: <StyledData>{notes.length}</StyledData>
       </StyledStatus>
       <StyledStatus>
-        Last created: <StyledData>{title} -</StyledData> {formatDate(date)}
+        Last: <StyledData>{title} -</StyledData> {formatDate(date)}
       </StyledStatus>
     </StyledWrapper>
   );
