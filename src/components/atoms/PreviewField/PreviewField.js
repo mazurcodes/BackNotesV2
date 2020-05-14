@@ -10,6 +10,7 @@ const StyledPreviewWrapper = styled.div`
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
     padding: 30px 20px;
+    width: 100vw;
   }
 `;
 
