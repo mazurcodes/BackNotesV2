@@ -25,6 +25,14 @@ const StyledWrapper = styled.div`
     css`
       transform: translateX(-600px);
     `}
+  
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+    max-width: 100vw;
+    overflow-y: scroll;
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    width: 100vw;
+  }
 `;
 
 const StyledForm = styled.form`
@@ -37,17 +45,28 @@ const StyledFormHeading = styled.h2`
   font-size: 50px;
   font-weight: ${({ theme }) => theme.regular};
   margin: 40px 0;
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    font-size: 35px;
+    margin: 25px 0;
+  }
 `;
 
 const StyledButtonOpen = styled(Button)`
   background-color: #5fd417;
   margin-bottom: 20px;
   font-weight: ${({ theme }) => theme.bold};
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    width: 85%;
+  }
 `;
 
-const StyledButtonSave = styled(Button)`
+const StyledButtonSave = styled(StyledButtonOpen)`
   background-color: #19c3e9;
-  font-weight: ${({ theme }) => theme.bold};
 `;
 
 const NewItemPanel = (props) => {

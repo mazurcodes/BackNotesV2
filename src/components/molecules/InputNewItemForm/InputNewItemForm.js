@@ -5,6 +5,13 @@ import Input from '../../atoms/Input/Input';
 
 const StyledFieldWrapper = styled.div`
   margin-bottom: 40px;
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    margin-bottom: 20px;
+    width: 85%;
+  }
 `;
 
 const StyledLabel = styled.label`
@@ -17,6 +24,12 @@ const StyledInput = styled(Input)`
   text-align: left;
   padding: 15px 20px;
   background-color: ${({ error }) => error && 'rgba(255, 0, 0, 0.2)'};
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
+    width: 100%;
+    padding: 10px 15px;
+  }
 `;
 
 const StyledError = styled.p`
