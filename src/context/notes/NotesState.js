@@ -41,6 +41,7 @@ const NotesState = ({ children }) => {
     htmlStats: null,
     saveStatus: '',
     error: '',
+    loading: false,
   };
 
   const [state, dispatch] = useReducer(notesReducer, initialState);

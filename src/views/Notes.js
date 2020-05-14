@@ -11,6 +11,9 @@ const Notes = () => {
   useEffect(() => {
     isAuthenticated && getNotes();
     clearCurrent();
+    return () => {
+      window.history.forward();
+    };
     // eslint-disable-next-line
   }, []);
 
