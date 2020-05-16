@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import TextArea from '../../atoms/TextArea/TextArea';
@@ -12,6 +12,7 @@ const StyledEditPreviewField = styled.div`
 const StyledEditField = styled(TextArea)`
   flex: 1;
   width: 50%;
+  margin-bottom: 150px;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
@@ -31,6 +32,11 @@ const StyledPreviewField = styled.div`
 `;
 
 const EditorField = ({ input, contentValueMutator }) => {
+  const editFieldRef = useRef(null);
+  useEffect(() => {
+    editFieldRef.current.style.height = `${editFieldRef.current.scrollHeight}px`;
+  });
+
   const handleTabKeyDown = (event) => {
     const { target, keyCode } = event;
     const { selectionStart, selectionEnd, value } = target;
@@ -48,7 +54,7 @@ const EditorField = ({ input, contentValueMutator }) => {
 
   return (
     <StyledEditPreviewField>
-      <StyledEditField type="text" {...input} onKeyDown={handleTabKeyDown} />
+      <StyledEditField type="text" {...input} onKeyDown={handleTabKeyDown} ref={editFieldRef} />
       <StyledPreviewField>
         <PreviewField />
       </StyledPreviewField>
