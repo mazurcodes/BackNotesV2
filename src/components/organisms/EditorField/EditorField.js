@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import TextArea from '../../atoms/TextArea/TextArea';
-import Spacer from '../../atoms/Spacer/Spacer';
 import PreviewField from '../../atoms/PreviewField/PreviewField';
 
 const StyledEditPreviewField = styled.div`
@@ -12,6 +11,7 @@ const StyledEditPreviewField = styled.div`
 
 const StyledEditField = styled(TextArea)`
   flex: 1;
+  width: 50%;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
@@ -20,16 +20,9 @@ const StyledEditField = styled(TextArea)`
   }
 `;
 
-const StyledSpacer = styled(Spacer)`
-  @media (max-width: ${({ theme }) => theme.device.tablet}) {
-  }
-  @media (max-width: ${({ theme }) => theme.device.mobile}) {
-    display: none;
-  }
-`;
-
 const StyledPreviewField = styled.div`
   flex: 1;
+  width: 50%;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
@@ -56,7 +49,6 @@ const EditorField = ({ input, contentValueMutator }) => {
   return (
     <StyledEditPreviewField>
       <StyledEditField type="text" {...input} onKeyDown={handleTabKeyDown} />
-      <StyledSpacer width="20px" height="100%" color="#ddd" />
       <StyledPreviewField>
         <PreviewField />
       </StyledPreviewField>

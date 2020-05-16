@@ -5,7 +5,6 @@ import '../../../theme/css/github-markdown.css';
 
 const StyledPreviewWrapper = styled.div`
   padding: 50px 60px;
-  flex: 1;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
