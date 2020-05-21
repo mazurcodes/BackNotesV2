@@ -14,9 +14,14 @@ const StyledWrapper = styled.div`
   flex-direction: column;
   padding: 30px 250px 50px 100px;
 
-  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+  @media (max-width: 1100px) {
     padding: 20px 30px 40px;
   }
+
+  @media (max-width: ${({ theme }) => theme.device.tablet}) {
+    padding: 20px 100px 40px 75px;
+  }
+
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
     padding: 20px 30px 40px;
   }
@@ -33,12 +38,20 @@ const StyledButtonIcon = styled(ButtonIcon)`
   transition: transform 0.3s;
   border: none;
 
+  @media (max-width: 1100px) {
+    height: 60px;
+    width: 60px;
+    bottom: 50px;
+    right: 30px;
+  }
+
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
     height: 50px;
     width: 50px;
     bottom: 40px;
     right: 25px;
   }
+
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
     height: 50px;
     width: 50px;

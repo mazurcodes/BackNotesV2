@@ -10,20 +10,24 @@ const StyledEditPreviewField = styled.div`
 `;
 
 const StyledEditField = styled(TextArea)`
-  flex: 1;
+  /* flex: 1; */
   width: 50%;
-  margin-bottom: 150px;
+  height: 100%;
+  overflow: scroll;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
-    height: 100vh;
     font-size: 14px;
+    margin-bottom: 150px;
+    height: ${({ height }) => height};
   }
 `;
 
 const StyledPreviewField = styled.div`
-  flex: 1;
+  /* flex: 1; */
   width: 50%;
+  height: 100%;
+  overflow: scroll;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
@@ -32,11 +36,14 @@ const StyledPreviewField = styled.div`
 `;
 
 const EditorField = ({ input, contentValueMutator }) => {
+  // EditField height match content - no scroll
   const editFieldRef = useRef(null);
+  const mobileEditorHeight = useRef('100vh');
   useEffect(() => {
-    editFieldRef.current.style.height = `${editFieldRef.current.scrollHeight}px`;
+    mobileEditorHeight.current = `${editFieldRef.current.scrollHeight}px`;
   });
 
+  // Handle TAB key
   const handleTabKeyDown = (event) => {
     const { target, keyCode } = event;
     const { selectionStart, selectionEnd, value } = target;
@@ -52,9 +59,20 @@ const EditorField = ({ input, contentValueMutator }) => {
     }
   };
 
+  const handleScroll = () => {
+    console.log(window.scrollTop);
+  };
+
   return (
     <StyledEditPreviewField>
-      <StyledEditField type="text" {...input} onKeyDown={handleTabKeyDown} ref={editFieldRef} />
+      <StyledEditField
+        type="text"
+        {...input}
+        onKeyDown={handleTabKeyDown}
+        ref={editFieldRef}
+        height={mobileEditorHeight.current}
+        onScroll={handleScroll}
+      />
       <StyledPreviewField>
         <PreviewField />
       </StyledPreviewField>

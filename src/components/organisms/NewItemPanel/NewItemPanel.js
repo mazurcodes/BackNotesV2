@@ -19,6 +19,7 @@ const StyledWrapper = styled.div`
   background-color: white;
   transition: transform 0.3s;
   box-shadow: -3px 0 10px 4px rgba(0, 0, 0, 0.05);
+  overflow-y: scroll;
 
   ${({ active }) =>
     active &&
@@ -28,7 +29,7 @@ const StyledWrapper = styled.div`
   
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
     max-width: 100vw;
-    overflow-y: scroll;
+    
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
     width: 100vw;

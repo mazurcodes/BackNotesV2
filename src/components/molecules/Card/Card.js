@@ -26,8 +26,6 @@ const StyledWrapper = styled.div`
   }
 
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
-  }
-  @media (max-width: ${({ theme }) => theme.device.mobile}) {
     display: grid;
     grid-template-columns: 1fr 2fr;
     grid-template-rows: 1.5fr 1fr 1fr;
@@ -36,6 +34,7 @@ const StyledWrapper = styled.div`
       'desc desc'
       'actions actions';
     height: unset;
+    padding: 10px 30px;
     & > * {
       margin: unset;
     }
@@ -48,8 +47,6 @@ const StyledTechWrapper = styled.div`
   text-align: center;
 
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
-  }
-  @media (max-width: ${({ theme }) => theme.device.mobile}) {
     grid-area: 'tech';
     width: 100%;
     height: 75px;
@@ -61,15 +58,13 @@ const StyledLogo = styled.img`
 `;
 
 const StyledTitleWrapper = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 300px;
   height: 100%;
 
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
-  }
-  @media (max-width: ${({ theme }) => theme.device.mobile}) {
     grid-area: title;
     width: 100%;
     height: 75px;
@@ -88,16 +83,14 @@ const StyledDate = styled(Paragraph)`
 `;
 
 const StyledDescriptionWrapper = styled.div`
-  flex: 1;
+  flex: 2;
 
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
-  }
-  @media (max-width: ${({ theme }) => theme.device.mobile}) {
     grid-area: desc;
     height: 100%;
     width: 100%;
     padding: 10px 0 10px;
-    border-top: 1px solid #ddd;
+    /* border-top: 1px solid #ddd; */
     border-bottom: 1px solid #ddd;
     text-align: center;
   }
@@ -108,15 +101,13 @@ const StyledDescription = styled(Paragraph)`
 `;
 
 const StyledActionsWrapper = styled.div`
+  flex: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 250px;
   height: 100%;
 
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
-  }
-  @media (max-width: ${({ theme }) => theme.device.mobile}) {
     grid-area: actions;
     width: 100%;
     padding: 10px 0;
@@ -125,6 +116,7 @@ const StyledActionsWrapper = styled.div`
 `;
 
 const StyledButtonIcon = styled(ButtonIcon)`
+  margin-right: 10px;
   border-radius: 50%;
   transition: transform 0.3s;
   :hover {
@@ -140,8 +132,6 @@ const StyledDivider = styled.div`
   background-color: rgba(0, 0, 0, 0.1);
   margin: 0 10px;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
-  }
-  @media (max-width: ${({ theme }) => theme.device.mobile}) {
     display: none;
   }
 `;
@@ -193,7 +183,7 @@ Card.propTypes = {
     id: PropTypes.string,
     title: PropTypes.string,
     desc: PropTypes.string,
-    date: PropTypes.string,
+    date: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }).isRequired,
 };
 
