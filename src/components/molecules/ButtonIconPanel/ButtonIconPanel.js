@@ -21,6 +21,7 @@ const StyledButtonIconContainer = styled.div`
   bottom: 50px;
   right: 50px;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
+    right: 30px;
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
     bottom: 40px;
@@ -36,11 +37,11 @@ const StyledButtonIcon = styled(ButtonIcon)`
   transition: transform 0.3s;
   border: none;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
-  }
-  @media (max-width: ${({ theme }) => theme.device.mobile}) {
     width: 50px;
     height: 50px;
     margin-top: 15px;
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
   }
 `;
 

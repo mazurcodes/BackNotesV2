@@ -6,10 +6,10 @@ import '../../../theme/css/github-markdown.css';
 const StyledPreviewWrapper = styled.div`
   padding: 50px 60px;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
+    width: 100vw;
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
     padding: 30px 20px;
-    width: 100vw;
   }
 `;
 
