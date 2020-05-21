@@ -15,11 +15,12 @@ const StyledEditField = styled(TextArea)`
   height: 100%;
   overflow: scroll;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
+    width: 100%;
+    height: ${({ height }) => height};
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
     font-size: 14px;
     margin-bottom: 150px;
-    height: ${({ height }) => height};
   }
 `;
 
@@ -29,9 +30,9 @@ const StyledPreviewField = styled.div`
   height: 100%;
   overflow: scroll;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
+    display: none;
   }
   @media (max-width: ${({ theme }) => theme.device.mobile}) {
-    display: none;
   }
 `;
 

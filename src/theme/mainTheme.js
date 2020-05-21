@@ -16,7 +16,7 @@ export const lightTheme = {
   },
   device: {
     mobile: '430px',
-    tablet: '800px',
+    tablet: '830px',
   },
 };
 

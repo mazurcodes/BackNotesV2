@@ -20,11 +20,11 @@ const StyledWrapper = styled.div`
 const StyledBarWrapper = styled.div`
   display: flex;
   @media (max-width: ${({ theme }) => theme.device.tablet}) {
-  }
-  @media (max-width: ${({ theme }) => theme.device.mobile}) {
     &:nth-of-type(2) {
       display: none;
     }
+  }
+  @media (max-width: ${({ theme }) => theme.device.mobile}) {
   }
 `;
 
